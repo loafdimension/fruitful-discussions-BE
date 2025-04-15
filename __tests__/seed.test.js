@@ -6,7 +6,7 @@ beforeAll(() => seed(data));
 afterAll(() => db.end());
 
 describe('seed', () => {
-  describe('topics table', () => {
+  describe.only('topics table', () => {
     test('topics table exists', () => {
       return db
         .query(
@@ -81,7 +81,7 @@ describe('seed', () => {
     });
   });
 
-  describe('users table', () => {
+  describe.only('users table', () => {
     test('users table exists', () => {
       return db
         .query(
@@ -155,7 +155,7 @@ describe('seed', () => {
     });
   });
 
-  describe('articles table', () => {
+  describe.only('articles table', () => {
     test('articles table exists', () => {
       return db
         .query(
