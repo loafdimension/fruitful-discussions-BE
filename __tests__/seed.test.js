@@ -155,7 +155,7 @@ describe('seed', () => {
     });
   });
 
-  describe.only('articles table', () => {
+  describe('articles table', () => {
     test('articles table exists', () => {
       return db
         .query(
