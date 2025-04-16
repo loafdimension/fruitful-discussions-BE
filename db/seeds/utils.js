@@ -5,5 +5,6 @@ exports.convertTimestampToDate = ({ created_at, ...otherProperties }) => {
   return { created_at: new Date(created_at), ...otherProperties };
 };
 
-
+// func needs to bring the ID's in to the table
+// tests need to be written for new func
 

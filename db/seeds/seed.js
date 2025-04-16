@@ -1,38 +1,6 @@
 const db = require("../connection");
 const format = require("pg-format");
-const {convertTimestampToDate} = require("../seeds/utils");
-
-/*
-create tables for topics / users / articles / comments
-
-TOPICS
-slug - unique primary key
-description - string (varchar)
-image_url - string containing link to image url (varchar)
-
-USERS
-username - unique primary key
-name - varchar
-avatar_url - varchar
-
-ARTICLES
-article_ID - unique primary key
-title - varchar
-topic - references slug from the topics table
-author - referencey username from users
-body - varchar
-created_at - defaults to current timestamp
-votes - deafults to 0
-article_image_url - string
-
-COMMENTS
-comment_ID - unique primary key
-article_ID - references article_ID from articles
-body - string
-votes - defaults to 0
-author - references username from users
-created_at - defaults to current timestamp
-*/
+const { convertTimestampToDate } = require("../seeds/utils");
 
 const seed = ({ topicData, userData, articleData, commentData }) => {
   return db
@@ -127,48 +95,62 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       // make the query
       return db.query(pgFormattedUsersData);
     })
-    // .then((result) => {
-    //   // convert timestamp to compatible format (ish)
-    //   const articlesWithDates = articleData.map(convertTimestampToDate);
+    .then(() => {
+      // get data in to nested arrays
+      const nestedArrayArticlesData = articleData.map((article) => {
+        const {
+          title,
+          topic,
+          author,
+          body,
+          created_at,
+          votes,
+          article_img_url,
+        } = convertTimestampToDate(article);
 
-    //   // get data in to nested arrays
-    //   const nestedArrayArticlesData = articleData.map(
-    //     ({
-    //       title,
-    //       topic,
-    //       author,
-    //       body,
-    //       created_at,
-    //       votes,
-    //       article_img_url,
-    //     }) => {
-    //       // converting date to compatible format (again)
-    //       // const formattedDate;
-    //       return [
-    //         title,
-    //         topic,
-    //         author,
-    //         body,
-    //         created_at,
-    //         votes,
-    //         article_img_url,
-    //       ];
-    //     }
-    //   );
-    //   // use pg format to insert in to the table
-    //   const pgFormattedArticlesData = format(
-    //     `
-    //     INSERT INTO articles
-    //     (title, topic, author, body, created_at, votes, article_img_url)
-    //     VALUES
-    //     %L
-    //     RETURNING *
-    //     `,
-    //     nestedArrayArticlesData
-    //   );
-    //   // make the query
-    //   return db.query(pgFormattedArticlesData);
-    // })
+        return [title, topic, author, body, created_at, votes, article_img_url];
+      });
+      // use pg format to insert in to the table
+      const pgFormattedArticlesData = format(
+        `
+        INSERT INTO articles
+        (title, topic, author, body, created_at, votes, article_img_url)
+        VALUES
+        %L
+        RETURNING *
+        `,
+        nestedArrayArticlesData
+      );
+      // make the query
+      return db.query(pgFormattedArticlesData);
+    })
+    .then((result) => {
+      console.log(result)
+      // invoke new func 
+      // get data in to nested arrays
+      const nestedArrayCommentsData = commentData.map((comment) => {
+        const { article_id, body, votes, author, created_at } =
+          convertTimestampToDate(comment);
+
+        return [article_id, body, votes, author, created_at];
+      });
+      // use pg format to insert in to the table
+      const pgFormattedCommentsData = format(
+        `
+        INSERT INTO comments
+        (article_id, body, votes, author, created_at)
+        VALUES
+        %L
+        RETURNING *
+        `,
+        nestedArrayCommentsData
+      );
+      // make the queryreccomend
+      return db.query(pgFormattedCommentsData);
+    });
 };
 
 module.exports = seed;
+
+// ARTICLES AND COMMENTS ARE EMPTY
+// UTILITY FUNCTION NEEDS TO BE CREATED TO SORT THIS?
