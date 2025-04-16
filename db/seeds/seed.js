@@ -60,19 +60,30 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
         avatar_url VARCHAR(1000) NOT NULL);
         `);
     })
-    // .then(() => {
-    //   return db.query(`
-    //     CREATE TABLE articles (
-    //     article_ID SERIAL PRIMARY KEY,
-    //     title,
-    //     topic,
-    //     author,
-    //     body,
-    //     created_at,
-    //     votes,
-    //     article_img_url);
-    //     `);
-    // })
+    .then(() => {
+      return db.query(`
+        CREATE TABLE articles (
+        article_ID SERIAL PRIMARY KEY,
+        title VARCHAR(200) NOT NULL,
+        topic VARCHAR(1000) NOT NULL REFERENCES topics(slug),
+        author VARCHAR(1000) NOT NULL REFERENCES users(username),
+        body TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        votes INT DEFAULT 0,
+        article_img_url VARCHAR(1000) NOT NULL);
+        `);
+    })
+    .then(() => {
+      return db.query(`
+        CREATE TABLE comments (
+        comment_ID SERIAL PRIMARY KEY,
+        article_ID INT REFERENCES articles(article_ID),
+        body TEXT,
+        votes INT DEFAULT 0,
+        author VARCHAR (100) NOT NULL REFERENCES users(username),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+        `);
+    })
 };
 
 module.exports = seed;
