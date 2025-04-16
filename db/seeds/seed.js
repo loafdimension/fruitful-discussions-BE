@@ -1,4 +1,6 @@
 const db = require("../connection");
+const format = require("pg-format");
+const {convertTimestampToDate} = require("../seeds/utils");
 
 /*
 create tables for topics / users / articles / comments
@@ -84,6 +86,89 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
         `);
     })
+    .then(() => {
+      // get data in to nested arrays
+      const nestedArrayTopicsData = topicData.map(
+        ({ slug, description, img_url }) => {
+          return [slug, description, img_url];
+        }
+      );
+      // use pg format to insert in to the table
+      const pgFormattedTopicsData = format(
+        `
+        INSERT INTO topics
+        (slug, description, img_url)
+        VALUES
+        %L
+        RETURNING *`,
+        nestedArrayTopicsData
+      );
+      // make the query
+      return db.query(pgFormattedTopicsData);
+    })
+    .then(() => {
+      // get data in to nested arrays
+      const nestedArrayUsersData = userData.map(
+        ({ username, name, avatar_url }) => {
+          return [username, name, avatar_url];
+        }
+      );
+      // use pg format to insert in to the table
+      const pgFormattedUsersData = format(
+        `
+        INSERT INTO users
+        (username, name, avatar_url)
+        VALUES
+        %L
+        RETURNING *
+        `,
+        nestedArrayUsersData
+      );
+      // make the query
+      return db.query(pgFormattedUsersData);
+    })
+    // .then((result) => {
+    //   // convert timestamp to compatible format (ish)
+    //   const articlesWithDates = articleData.map(convertTimestampToDate);
+
+    //   // get data in to nested arrays
+    //   const nestedArrayArticlesData = articleData.map(
+    //     ({
+    //       title,
+    //       topic,
+    //       author,
+    //       body,
+    //       created_at,
+    //       votes,
+    //       article_img_url,
+    //     }) => {
+    //       // converting date to compatible format (again)
+    //       // const formattedDate;
+    //       return [
+    //         title,
+    //         topic,
+    //         author,
+    //         body,
+    //         created_at,
+    //         votes,
+    //         article_img_url,
+    //       ];
+    //     }
+    //   );
+    //   // use pg format to insert in to the table
+    //   const pgFormattedArticlesData = format(
+    //     `
+    //     INSERT INTO articles
+    //     (title, topic, author, body, created_at, votes, article_img_url)
+    //     VALUES
+    //     %L
+    //     RETURNING *
+    //     `,
+    //     nestedArrayArticlesData
+    //   );
+    //   // make the query
+    //   return db.query(pgFormattedArticlesData);
+    // })
 };
 
 module.exports = seed;

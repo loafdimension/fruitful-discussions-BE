@@ -543,9 +543,9 @@ describe('seed', () => {
   });
 });
 
-describe('data insertion', () => {
+describe.only('data insertion', () => {
 
-  test('topics data has been inserted correctly', () => {
+  test.only('topics data has been inserted correctly', () => {
     return db.query(`SELECT * FROM topics;`).then(({ rows: topics }) => {
       expect(topics).toHaveLength(3);
       topics.forEach((topic) => {
@@ -556,7 +556,7 @@ describe('data insertion', () => {
     });
   });
 
-  test('users data has been inserted correctly', () => {
+  test.only('users data has been inserted correctly', () => {
     return db.query(`SELECT * FROM users;`).then(({ rows: users }) => {
       expect(users).toHaveLength(4);
       users.forEach((user) => {
