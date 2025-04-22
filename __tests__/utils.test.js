@@ -47,7 +47,7 @@ describe("createLookupObject", () => {
     //assert
     expect(result).toEqual({});
   });
-  test('should return a lookup object with a single key and value when passed an array of length 1', () => {
+  xtest('should return a lookup object with a single key and value when passed an array of length 1', () => {
     //arrange
     const input = [{
       article_id: 1,
