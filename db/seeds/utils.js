@@ -7,4 +7,10 @@ exports.convertTimestampToDate = ({ created_at, ...otherProperties }) => {
 
 // func needs to bring the ID's in to the table
 // tests need to be written for new func
-
+exports.createLookupObject = (articlesData) => {
+  if (articlesData.length === 0){
+    return {};
+  }
+  const lookup = {}
+  
+}

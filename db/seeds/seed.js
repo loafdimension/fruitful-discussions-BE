@@ -131,7 +131,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       const nestedArrayCommentsData = commentData.map((comment) => {
         const { article_id, body, votes, author, created_at } =
           convertTimestampToDate(comment);
-
+        console.log(article_id, "<<< article id")
         return [article_id, body, votes, author, created_at];
       });
       // use pg format to insert in to the table
@@ -154,3 +154,5 @@ module.exports = seed;
 
 // ARTICLES AND COMMENTS ARE EMPTY
 // UTILITY FUNCTION NEEDS TO BE CREATED TO SORT THIS?
+
+// look up object
