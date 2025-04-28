@@ -26,7 +26,7 @@ describe("GET /api", () => {
 });
 
 describe("GET /api/topics", () => {
-  xtest("200: Responds with an array of topic objects, each with a slug and properties description", () => {
+  test("200: Responds with an array of topic objects, each with a slug and properties description", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
@@ -39,27 +39,11 @@ describe("GET /api/topics", () => {
         });
       });
   });
-  test.todo("400: Responds with an error when passed a bad request");
-  test.todo(
-    "404: Responds with an error when giiven a valid request, but no data exists"
-  );
-});
-
-/*
-test("Resonds with error 400 when passed bad request", () => {
-  return request(app)
-    .get("/api/treasures/banana")
-    .expect(400)
-    .then(({ body }) => {
-      expect(body.msg).toBe("Bad request");
-    });
-});
-test("Responds with a 404 error when given valid request, but no data exists", () => {
-  return request(app)
-    .get("/api/treasures/27")
+  test(
+    "404: Responds with an error when attempting to access a non existent endpoint", () => {
+      return request(app)
+    .get("/api/ninenine")
     .expect(404)
-    .then(({ body }) => {
-      expect(body.msg).toBe("error message");
     });
-});
-*/
+    });
+
