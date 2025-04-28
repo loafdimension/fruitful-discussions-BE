@@ -6,4 +6,6 @@ const { getAPI } = require("./controller/controller");
 
 app.get("/api", getAPI);
 
+// app.get("/api/topics", getTopics);
+
 module.exports = app;
