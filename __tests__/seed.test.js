@@ -6,7 +6,7 @@ beforeAll(() => seed(data));
 afterAll(() => db.end());
 
 describe('seed', () => {
-  describe.only('topics table', () => {
+  describe('topics table', () => {
     test('topics table exists', () => {
       return db
         .query(
@@ -81,7 +81,7 @@ describe('seed', () => {
     });
   });
 
-  describe.only('users table', () => {
+  describe('users table', () => {
     test('users table exists', () => {
       return db
         .query(
@@ -155,7 +155,7 @@ describe('seed', () => {
     });
   });
 
-  describe.only('articles table', () => {
+  describe('articles table', () => {
     test('articles table exists', () => {
       return db
         .query(
@@ -363,7 +363,7 @@ describe('seed', () => {
     });
   });
 
-  describe.only('comments table', () => {
+  describe('comments table', () => {
     test('comments table exists', () => {
       return db
         .query(
@@ -543,9 +543,9 @@ describe('seed', () => {
   });
 });
 
-describe.only('data insertion', () => {
+describe('data insertion', () => {
 
-  test.only('topics data has been inserted correctly', () => {
+  test('topics data has been inserted correctly', () => {
     return db.query(`SELECT * FROM topics;`).then(({ rows: topics }) => {
       expect(topics).toHaveLength(3);
       topics.forEach((topic) => {
@@ -556,7 +556,7 @@ describe.only('data insertion', () => {
     });
   });
 
-  test.only('users data has been inserted correctly', () => {
+  test('users data has been inserted correctly', () => {
     return db.query(`SELECT * FROM users;`).then(({ rows: users }) => {
       expect(users).toHaveLength(4);
       users.forEach((user) => {
@@ -567,7 +567,7 @@ describe.only('data insertion', () => {
     });
   });
   
-  test.only('articles data has been inserted correctly', () => {
+  test('articles data has been inserted correctly', () => {
     return db.query(`SELECT * FROM articles;`).then(({ rows: articles }) => {
       expect(articles).toHaveLength(13);
       articles.forEach((article) => {
@@ -583,7 +583,7 @@ describe.only('data insertion', () => {
     });
   });
   
-  test.only('comments data has been inserted correctly', () => {
+  test('comments data has been inserted correctly', () => {
     return db.query(`SELECT * FROM comments;`).then(({ rows: comments }) => {
       expect(comments).toHaveLength(18);
       comments.forEach((comment) => {

@@ -1,10 +1,10 @@
-const db = require("../connection");
 const format = require("pg-format");
 const {
-  convertTimestampToDate,
-  createRef,
-  formatComments,
-} = require("../seeds/utils");
+	createRef,
+	formatComments,
+	convertTimestampToDate,
+} = require("./utils");
+const db = require("../connection");
 
 const seed = async ({ topicData, userData, articleData, commentData }) => {
 	return db
@@ -100,8 +100,6 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 		})
 		.then(({ rows }) => {
 			const articleIdLookup = createRef(rows, "title", "article_id");
-      console.log(rows, "<<< rows from 1st arg of create ref")
-      console.log(articleIdLookup, "<<<< create ref invoked")
 			const formattedCommentData = formatComments(commentData, articleIdLookup);
 			const insertCommentsQueryStr = format(
 				"INSERT INTO comments (body, author, article_id, votes, created_at) VALUES %L RETURNING *;",
@@ -120,4 +118,3 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 };
 
 module.exports = seed;
-

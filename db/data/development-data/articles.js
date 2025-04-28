@@ -1,4 +1,4 @@
-module.exports = [
+SELmodule.exports = [
   {
     title: "Running a Node App",
     topic: "coding",
