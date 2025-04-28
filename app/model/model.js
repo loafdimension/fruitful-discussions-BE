@@ -23,4 +23,6 @@ const selectArticlesByID = (articleID) => {
     });
 };
 
-module.exports = { selectTopics, selectArticlesByID };
+const selectArticles = () => {};
+
+module.exports = { selectTopics, selectArticlesByID, selectArticles };
