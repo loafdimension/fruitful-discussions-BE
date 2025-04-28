@@ -1,10 +1,9 @@
 const db = require("../../db/connection");
 
-// const selectTopics = () => {
-//     return db.query(`SELECT * FROM topics;`)
-//     .then((result) => {
-//       console.log(result, "<<< result of db query from model")  
-//     })
-// }
+const selectTopics = () => {
+  return db.query(`SELECT * FROM topics;`).then((result) => {
+    return result.rows;
+  });
+};
 
-module.exports = {selectTopics}
+module.exports = { selectTopics };
