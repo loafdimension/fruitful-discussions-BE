@@ -6,4 +6,21 @@ const selectTopics = () => {
   });
 };
 
-module.exports = { selectTopics };
+const selectArticlesByID = (articleID) => {
+  return db
+    .query(`SELECT * FROM articles WHERE article_id = $1`, [articleID])
+    .then(({ rows }) => {
+      const article = rows[0];
+
+      if (!article) {
+        return Promise.reject({
+          status: 404,
+          msg: "404: Error",
+        });
+      } else {
+        return article;
+      }
+    });
+};
+
+module.exports = { selectTopics, selectArticlesByID };
