@@ -1,6 +1,6 @@
 const newsData = require("../../db/data/test-data/index");
 const JSONEndPoints = require("../../endpoints.json");
-const { selectTopics } = require("../model/model");
+const { selectTopics, selectArticlesByID } = require("../model/model");
 
 const getAPI = (req, res, next) => {
   res.status(200).send({ endpoints: JSONEndPoints });
@@ -16,4 +16,15 @@ const getTopics = (req, res, next) => {
     });
 };
 
-module.exports = { getAPI, getTopics };
+const getArticlesByID = (req, res, next) => {
+  const { article_id } = req.params;
+  return selectArticlesByID(article_id)
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+module.exports = { getAPI, getTopics, getArticlesByID };
