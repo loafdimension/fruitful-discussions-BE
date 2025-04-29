@@ -56,4 +56,27 @@ ORDER BY
     });
 };
 
-module.exports = { selectTopics, selectArticlesByID, selectArticles };
+const selectArticleCommentsByArticleID = (article_id) => {
+  return db
+    .query(`SELECT * FROM comments WHERE article_id = $1`, [article_id])
+    .then(({ rows }) => {
+      const comments = rows;
+      console.log(comments, "<<< comments (rows) from model");
+
+      if (!comments) {
+        return Promise.reject({
+          status: 404,
+          msg: "404: Error",
+        });
+      } else {
+        return comments;
+      }
+    });
+};
+
+module.exports = {
+  selectTopics,
+  selectArticlesByID,
+  selectArticles,
+  selectArticleCommentsByArticleID,
+};

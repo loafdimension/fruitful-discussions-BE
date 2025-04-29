@@ -73,7 +73,7 @@ describe("GET /api/articles/:article_id", () => {
   });
   test("404: Responds with a 404 error when given valid request, but no data exists", () => {
     return request(app)
-      .get("/api/articles/30")
+      .get("/api/articles/99999")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("404: Error");
@@ -103,5 +103,49 @@ describe("GET /api/articles", () => {
   });
   test("404: Responds with an error when attempting to access a non existent endpoint", () => {
     return request(app).get("/api/articooles").expect(404);
+  });
+});
+
+describe("GET /api/articles/:article_id/comments", () => {
+  // test.skip("200: Responds with an array of comments for the article id provided, which has the following properties: comment_id, votes, created_at, author, body, article_id. Should be sorted with most recent comments first", () => {
+  //   return request(app)
+  //     .get("/api/articles/9/comments")
+  //     .expect(200)
+  //     .then((res) => {
+  //       expect(res.body).toEqual([
+  //         {
+  //           body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+  //           votes: 16,
+  //           author: "butter_bridge",
+  //           created_at: 1586179020000
+  //           // comment_id: insert here,
+  //           // article_id: insert here
+  //         },
+  //         {
+  //           body: "The owls are not what they seem.",
+  //           votes: 20,
+  //           author: "icellusedkars",
+  //           created_at: 1584205320000,
+  //           comment_id: insert here,
+  //           article_id: insert here 
+  //         },
+  //       ]);
+  //     });
+  // });
+  test("400: Resonds with a 400 error when passed bad request", () => {
+    return request(app)
+      .get("/api/articles/dragonfly")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("400: Bad request");
+      });
+  });
+  test("404: Responds with a 404 error when given valid request, but no data exists", () => {
+    return request(app)
+      .get("/api/articles/401")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("404: Error");
+      });
   });
 });
