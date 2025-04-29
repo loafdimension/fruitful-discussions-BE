@@ -80,3 +80,28 @@ describe("GET /api/articles/:article_id", () => {
       });
   });
 });
+
+describe("GET /api/articles", () => {
+  test("200: Responds with an array of all article objects, which each have the following properties: author, title, article_id, topic, created_at, votes, article_img_url, and comment_count. Should be sorted by date in descending order", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        const articlesArr = res.body;
+        expect(articlesArr).toHaveLength(13);
+        articlesArr.forEach((article) => {
+          expect(typeof article.author).toBe("string");
+          expect(typeof article.title).toBe("string");
+          expect(typeof article.article_id).toBe("number");
+          expect(typeof article.topic).toBe("string");
+          expect(typeof article.created_at).toBe("string");
+          expect(typeof article.votes).toBe("number");
+          expect(typeof article.article_img_url).toBe("string");
+          expect(typeof article.comment_count).toBe("string");
+        });
+      });
+  });
+  test("404: Responds with an error when attempting to access a non existent endpoint", () => {
+    return request(app).get("/api/articooles").expect(404);
+  });
+});
