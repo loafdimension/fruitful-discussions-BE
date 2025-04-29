@@ -9,6 +9,8 @@ const {
   getArticleCommentsByArticleID,
 } = require("./controller/controller");
 
+// app thing that goes here to help with the format of post requests
+
 app.get("/api", getAPI);
 
 app.get("/api/topics", getTopics);

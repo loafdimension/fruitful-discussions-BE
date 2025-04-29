@@ -149,3 +149,61 @@ describe("GET /api/articles/:article_id/comments", () => {
       });
   });
 });
+
+describe.only("POST /api/articles/:article_id/comments", () => {
+  test("201: Successful post request. Should add a comment for an article which is selected by its parametric endpoint. The request should accept an object with a username and body property and respond with the posted comment.", () => {
+    const testCommentToAdd = {
+      username: book_worm_jelly_bean,
+      body: "i am a worm and i live in article 9 eating jelly beans"
+    };
+    return request(app)
+    .post("/api/articles/9/comments")
+    .send(testCommentToAdd)
+    .expect(201)
+    .then((res) => {
+      expect(res.body).toHaveProperty("comment_id")
+      expect(res.body).toHaveProperty("article_id")
+      expect(res.body).toHaveProperty("author")
+      expect(res.body).toHaveProperty("votes")
+      expect(res.body).toHaveProperty("created_at")
+      expect(res.body).toHaveProperty("body", testCommentToAdd.body)
+    })
+  })
+  test("400: Resonds with a 400 error when passed bad request (invalid article id)", () => {
+    const testCommentToAdd = {
+      username: book_worm_jelly_bean,
+      body: "i am a worm and i live in article 9 eating jelly beans"
+    };
+    return request(app)
+      .get("/api/articles/frozenpeas/comments")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("400: Bad request");
+      });
+  });
+  test("400: Resonds with a 400 error when passed bad request (without required request information)", () => {
+    const testCommentToAdd = {
+      username: book_worm_jelly_bean
+    };
+    return request(app)
+      .post("/api/articles/9/comments")
+      .send(testCommentToAdd)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("400: Bad request");
+      });
+  });
+  test("404: Responds with a 404 error when given valid request, but no data exists", () => {
+    const testCommentToAdd = {
+      username: book_worm_jelly_bean,
+      body: "i am a worm and i live in article 99999 eating jelly beans"
+    };
+    return request(app)
+      .post("/api/articles/99999")
+      .send(testCommentToAdd)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("404: Error");
+      });
+  });
+})
