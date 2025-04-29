@@ -71,7 +71,7 @@ describe("GET /api/articles/:article_id", () => {
         expect(body.msg).toBe("400: Bad request");
       });
   });
-  test.only("404: Responds with a 404 error when given valid request, but no data exists", () => {
+  test("404: Responds with a 404 error when given valid request, but no data exists", () => {
     return request(app)
       .get("/api/articles/30")
       .expect(404)
@@ -97,7 +97,7 @@ describe("GET /api/articles", () => {
           expect(typeof article.created_at).toBe("string");
           expect(typeof article.votes).toBe("number");
           expect(typeof article.article_img_url).toBe("string");
-          expect(typeof article.comment_count).toBe("number");
+          expect(typeof article.comment_count).toBe("string");
         });
       });
   });

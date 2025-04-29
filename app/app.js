@@ -5,7 +5,7 @@ const {
   getAPI,
   getTopics,
   getArticlesByID,
-  getArticles
+  getArticles,
 } = require("./controller/controller");
 
 app.get("/api", getAPI);

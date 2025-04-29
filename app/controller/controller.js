@@ -31,6 +31,14 @@ const getArticlesByID = (req, res, next) => {
     });
 };
 
-const getArticles = (req, res, next) => {};
+const getArticles = (req, res, next) => {
+  return selectArticles()
+    .then((articles) => {
+      res.status(200).send(articles);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 module.exports = { getAPI, getTopics, getArticlesByID, getArticles };

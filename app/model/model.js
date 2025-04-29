@@ -23,6 +23,37 @@ const selectArticlesByID = (articleID) => {
     });
 };
 
-const selectArticles = () => {};
+const selectArticles = () => {
+  return db
+    .query(
+      `SELECT 
+  articles.article_id::INTEGER AS article_id,
+    articles.title::VARCHAR(200) AS title,
+    articles.topic::VARCHAR(100) AS topic,
+    articles.author::VARCHAR(100) AS author,
+    articles.body::TEXT AS body, 
+    articles.created_at::TEXT AS created_at,
+    articles.votes::INTEGER AS votes,
+    articles.article_img_url::VARCHAR(250) AS article_img_url,
+    COUNT(comments.article_id)::VARCHAR(10) AS comment_count
+FROM
+  articles
+LEFT JOIN
+  comments ON articles.article_id = comments.article_id
+GROUP BY
+  articles.article_id,
+  articles.title,
+  articles.topic,
+  articles.author,
+  articles.created_at,
+  articles.votes,
+  articles.article_img_url
+ORDER BY
+  created_at DESC;`
+    )
+    .then((result) => {
+      return result.rows;
+    });
+};
 
 module.exports = { selectTopics, selectArticlesByID, selectArticles };
