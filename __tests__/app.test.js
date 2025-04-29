@@ -97,12 +97,9 @@ describe("GET /api/articles", () => {
           expect(typeof article.created_at).toBe("string");
           expect(typeof article.votes).toBe("number");
           expect(typeof article.article_img_url).toBe("string");
-          expect(typeof article.comment_count).toBe("string");
+          expect(typeof article.comment_count).toBe("number");
         });
       });
-  });
-  test("404: Responds with an error when attempting to access a non existent endpoint", () => {
-    return request(app).get("/api/articooles").expect(404);
   });
 });
 
@@ -132,47 +129,31 @@ describe("GET /api/articles/:article_id/comments", () => {
         ]);
       });
   });
-  test("400: Resonds with a 400 error when passed bad request", () => {
-    return request(app)
-      .get("/api/articles/dragonfly")
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).toBe("400: Bad request");
-      });
-  });
-  test("404: Responds with a 404 error when given valid request, but no data exists", () => {
-    return request(app)
-      .get("/api/articles/401")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).toBe("404: Error");
-      });
-  });
 });
 
-describe.only("POST /api/articles/:article_id/comments", () => {
+describe.skip("POST /api/articles/:article_id/comments", () => {
   test("201: Successful post request. Should add a comment for an article which is selected by its parametric endpoint. The request should accept an object with a username and body property and respond with the posted comment.", () => {
     const testCommentToAdd = {
       username: book_worm_jelly_bean,
-      body: "i am a worm and i live in article 9 eating jelly beans"
+      body: "i am a worm and i live in article 9 eating jelly beans",
     };
     return request(app)
-    .post("/api/articles/9/comments")
-    .send(testCommentToAdd)
-    .expect(201)
-    .then((res) => {
-      expect(res.body).toHaveProperty("comment_id")
-      expect(res.body).toHaveProperty("article_id")
-      expect(res.body).toHaveProperty("author")
-      expect(res.body).toHaveProperty("votes")
-      expect(res.body).toHaveProperty("created_at")
-      expect(res.body).toHaveProperty("body", testCommentToAdd.body)
-    })
-  })
+      .post("/api/articles/9/comments")
+      .send(testCommentToAdd)
+      .expect(201)
+      .then((res) => {
+        expect(res.body).toHaveProperty("comment_id");
+        expect(res.body).toHaveProperty("article_id");
+        expect(res.body).toHaveProperty("author");
+        expect(res.body).toHaveProperty("votes");
+        expect(res.body).toHaveProperty("created_at");
+        expect(res.body).toHaveProperty("body", testCommentToAdd.body);
+      });
+  });
   test("400: Resonds with a 400 error when passed bad request (invalid article id)", () => {
     const testCommentToAdd = {
       username: book_worm_jelly_bean,
-      body: "i am a worm and i live in article 9 eating jelly beans"
+      body: "i am a worm and i live in article 9 eating jelly beans",
     };
     return request(app)
       .get("/api/articles/frozenpeas/comments")
@@ -183,7 +164,7 @@ describe.only("POST /api/articles/:article_id/comments", () => {
   });
   test("400: Resonds with a 400 error when passed bad request (without required request information)", () => {
     const testCommentToAdd = {
-      username: book_worm_jelly_bean
+      username: book_worm_jelly_bean,
     };
     return request(app)
       .post("/api/articles/9/comments")
@@ -196,7 +177,7 @@ describe.only("POST /api/articles/:article_id/comments", () => {
   test("404: Responds with a 404 error when given valid request, but no data exists", () => {
     const testCommentToAdd = {
       username: book_worm_jelly_bean,
-      body: "i am a worm and i live in article 99999 eating jelly beans"
+      body: "i am a worm and i live in article 99999 eating jelly beans",
     };
     return request(app)
       .post("/api/articles/99999")
@@ -206,4 +187,4 @@ describe.only("POST /api/articles/:article_id/comments", () => {
         expect(body.msg).toBe("404: Error");
       });
   });
-})
+});

@@ -27,15 +27,15 @@ const selectArticles = () => {
   return db
     .query(
       `SELECT 
-  articles.article_id::INTEGER AS article_id,
-    articles.title::VARCHAR(200) AS title,
-    articles.topic::VARCHAR(100) AS topic,
-    articles.author::VARCHAR(100) AS author,
-    articles.body::TEXT AS body, 
-    articles.created_at::TEXT AS created_at,
-    articles.votes::INTEGER AS votes,
-    articles.article_img_url::VARCHAR(250) AS article_img_url,
-    COUNT(comments.article_id)::VARCHAR(10) AS comment_count
+  articles.article_id,
+    articles.title,
+    articles.topic,
+    articles.author,
+    articles.body, 
+    articles.created_at,
+    articles.votes,
+    articles.article_img_url,
+    COUNT(comments.article_id)::INT AS comment_count
 FROM
   articles
 LEFT JOIN
@@ -58,7 +58,10 @@ ORDER BY
 
 const selectArticleCommentsByArticleID = (article_id) => {
   return db
-    .query(`SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC;`, [article_id])
+    .query(
+      `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC;`,
+      [article_id]
+    )
     .then(({ rows }) => {
       const comments = rows;
 
@@ -73,9 +76,14 @@ const selectArticleCommentsByArticleID = (article_id) => {
     });
 };
 
+const insertArticleCommentByArticleID = (article_id, username, body) => {
+  return db.query(`INSERT INTO comments `)
+};
+
 module.exports = {
   selectTopics,
   selectArticlesByID,
   selectArticles,
   selectArticleCommentsByArticleID,
+  insertArticleCommentByArticleID,
 };

@@ -5,6 +5,7 @@ const {
   selectArticlesByID,
   selectArticles,
   selectArticleCommentsByArticleID,
+  insertArticleCommentByArticleID,
 } = require("../model/model");
 
 const getAPI = (req, res, next) => {
@@ -53,10 +54,13 @@ const getArticleCommentsByArticleID = (req, res, next) => {
     });
 };
 
+const postArticleCommentByArticleID = (req, res, next) => {};
+
 module.exports = {
   getAPI,
   getTopics,
   getArticlesByID,
   getArticles,
   getArticleCommentsByArticleID,
+  postArticleCommentByArticleID,
 };

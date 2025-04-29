@@ -7,6 +7,7 @@ const {
   getArticlesByID,
   getArticles,
   getArticleCommentsByArticleID,
+  postArticleCommentByArticleID
 } = require("./controller/controller");
 
 // app thing that goes here to help with the format of post requests
@@ -20,6 +21,8 @@ app.get("/api/articles/:article_id", getArticlesByID);
 app.get("/api/articles", getArticles);
 
 app.get("/api/articles/:article_id/comments", getArticleCommentsByArticleID);
+
+app.post("/api/articles/:article_id/comments", postArticleCommentByArticleID);
 
 app.use((err, req, res, next) => {
   if (err.code === "22P02") {
