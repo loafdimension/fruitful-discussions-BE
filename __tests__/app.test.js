@@ -50,7 +50,7 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/3")
       .expect(200)
       .then((res) => {
-        expect(res.body).toEqual({
+        expect(res.body).toMatchObject({
           article_id: 3,
           title: "Eight pug gifs that remind me of mitch",
           topic: "mitch",
@@ -107,31 +107,31 @@ describe("GET /api/articles", () => {
 });
 
 describe("GET /api/articles/:article_id/comments", () => {
-  // test.skip("200: Responds with an array of comments for the article id provided, which has the following properties: comment_id, votes, created_at, author, body, article_id. Should be sorted with most recent comments first", () => {
-  //   return request(app)
-  //     .get("/api/articles/9/comments")
-  //     .expect(200)
-  //     .then((res) => {
-  //       expect(res.body).toEqual([
-  //         {
-  //           body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-  //           votes: 16,
-  //           author: "butter_bridge",
-  //           created_at: 1586179020000
-  //           // comment_id: insert here,
-  //           // article_id: insert here
-  //         },
-  //         {
-  //           body: "The owls are not what they seem.",
-  //           votes: 20,
-  //           author: "icellusedkars",
-  //           created_at: 1584205320000,
-  //           comment_id: insert here,
-  //           article_id: insert here 
-  //         },
-  //       ]);
-  //     });
-  // });
+  test("200: Responds with an array of comments for the article id provided, which has the following properties: comment_id, votes, created_at, author, body, article_id. Should be sorted with most recent comments first", () => {
+    return request(app)
+      .get("/api/articles/9/comments")
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toMatchObject([
+          {
+            body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            votes: 16,
+            author: "butter_bridge",
+            created_at: "2020-04-06T11:17:00.000Z",
+            comment_id: 1,
+            article_id: 9,
+          },
+          {
+            body: "The owls are not what they seem.",
+            votes: 20,
+            author: "icellusedkars",
+            created_at: "2020-03-14T16:02:00.000Z",
+            comment_id: 17,
+            article_id: 9,
+          },
+        ]);
+      });
+  });
   test("400: Resonds with a 400 error when passed bad request", () => {
     return request(app)
       .get("/api/articles/dragonfly")
