@@ -61,11 +61,11 @@ const postArticleCommentByArticleID = (req, res, next) => {
   if (!username || !body) {
     return next({
       status: 400,
-      msg: "400: Bad request" 
+      msg: "400: Bad request - missing required information" 
     });
   }
 
-  if (typeof body !== "string") {
+  else if (typeof body !== "string") {
     return next({
       status: 400,
       msg: "400: Invalid data type in the body"

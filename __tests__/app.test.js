@@ -103,7 +103,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe.only("GET /api/articles/:article_id/comments", () => {
+describe("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with an array of comments for the article id provided, which has the following properties: comment_id, votes, created_at, author, body, article_id. Should be sorted with most recent comments first", () => {
     return request(app)
       .get("/api/articles/9/comments")
@@ -150,31 +150,33 @@ describe("POST /api/articles/:article_id/comments", () => {
         expect(res.body).toHaveProperty("body", testCommentToAdd.body);
       });
   });
-  test("400: Resonds with a 400 error when passed a  body with valid fields, but the value of the field is invalid (invalid body data type)", () => {
+  test("400: Responds with a 400 error when passed a body with valid fields, but the value of the field is invalid (invalid body data type)", () => {
     const testCommentToAdd = {
       username: "lurker",
       body: 3005,
     };
     return request(app)
       .post("/api/articles/9/comments")
+      .send(testCommentToAdd)
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("400: Invalid data type in the body");
       });
   });
-  test("400: Resonds with a 400 error when passed a  body with valid fields, but the value of the field is invalid (invalid user)", () => {
+  test("400: Responds with a 400 error when passed a  body with valid fields, but the value of the field is invalid (invalid user)", () => {
     const testCommentToAdd = {
       username: "jelly bean eating book worm",
       body: "i live in article 9 eating jelly beans",
     };
     return request(app)
       .post("/api/articles/9/comments")
+      .send(testCommentToAdd)
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("404: User not found");
       });
   });
-  test("400: Resonds with a 400 error when passed a body that does not contain the correct fields", () => {
+  test("400: Responds with a 400 error when passed a body that does not contain the correct fields", () => {
     const testCommentToAdd = {
       username: "lurker",
     };
