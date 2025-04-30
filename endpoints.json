@@ -57,5 +57,32 @@
         "article_id": 9
       }
     ]
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "posts a comment in to the article id that is given and responds with the posted comment",
+    "acceptable queries": {
+      "username": "a username that exists in users",
+      "body": "whatever text you like :)"
+    },
+    "example response": {
+      "article_title": "They're not exactly dogs, are they?",
+      "body": "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+      "votes": 16,
+      "author": "butter_bridge",
+      "created_at": "2020-03-14T16:02:00.000Z"
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "Updates votes on an article by its article_id",
+    "acceptable queries": { "inc_votes": 10 },
+    "example response": {
+      "title": "Sony Vaio; or, The Laptop",
+      "topic": "mitch",
+      "author": "icellusedkars",
+      "body": "example body",
+      "created_at": "2020-03-14T16:02:00.000Z",
+      "votes": 10,
+      "article_img_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+    }
   }
 }
