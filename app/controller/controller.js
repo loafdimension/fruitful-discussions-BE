@@ -5,6 +5,7 @@ const {
   selectArticlesByID,
   selectArticles,
   selectArticleCommentsByArticleID,
+  insertArticleCommentByArticleID,
 } = require("../model/model");
 
 const getAPI = (req, res, next) => {
@@ -53,10 +54,38 @@ const getArticleCommentsByArticleID = (req, res, next) => {
     });
 };
 
+const postArticleCommentByArticleID = (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+
+  if (!username || !body) {
+    return next({
+      status: 400,
+      msg: "400: Bad request - missing required information" 
+    });
+  }
+
+  else if (typeof body !== "string") {
+    return next({
+      status: 400,
+      msg: "400: Invalid data type in the body"
+    });
+  }
+
+  insertArticleCommentByArticleID(article_id, username, body)
+    .then((newComment) => {
+      res.status(201).send(newComment);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 module.exports = {
   getAPI,
   getTopics,
   getArticlesByID,
   getArticles,
   getArticleCommentsByArticleID,
+  postArticleCommentByArticleID,
 };
