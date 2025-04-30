@@ -77,21 +77,20 @@ const selectArticleCommentsByArticleID = (article_id) => {
 };
 
 const insertArticleCommentByArticleID = (article_id, username, body) => {
-
-  return db.query(`SELECT * FROM users WHERE username = $1`, [username])
-  .then((usernameResult) => {
-    if (usernameResult.rows.length === 0){
-      return Promise.reject({
-        status: 404,
-        msg:"404: User not found"
-      })
-    }
-  const query =  `INSERT INTO comments (article_id, author, body)
-    VALUES ($1, $2, $3)
-    RETURNING *;`
   return db
-    .query(query, [article_id, username, body])
-  })
+    .query(`SELECT * FROM users WHERE username = $1`, [username])
+    .then((usernameResult) => {
+      if (usernameResult.rows.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "404: User not found",
+        });
+      }
+      const query = `INSERT INTO comments (article_id, author, body)
+    VALUES ($1, $2, $3)
+    RETURNING *;`;
+      return db.query(query, [article_id, username, body]);
+    })
     .then((result) => {
       if (result.rows.length === 0) {
         return Promise.reject({
@@ -100,7 +99,24 @@ const insertArticleCommentByArticleID = (article_id, username, body) => {
         });
       }
       return result.rows[0];
-    })
+    });
+};
+
+const updateArticleVotes = (inc_votes, article_id) => {
+  return db
+    .query(
+      `UPDATE articles SET votes = votes + $1 WHERE article_id = $2 RETURNING *`,
+      [inc_votes, article_id]
+    )
+    .then((result) => {
+      if (result.rows.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "404: Article not found",
+        });
+      }
+      return result.rows[0];
+    });
 };
 
 module.exports = {
@@ -109,4 +125,5 @@ module.exports = {
   selectArticles,
   selectArticleCommentsByArticleID,
   insertArticleCommentByArticleID,
+  updateArticleVotes,
 };

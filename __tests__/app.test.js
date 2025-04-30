@@ -185,7 +185,54 @@ describe("POST /api/articles/:article_id/comments", () => {
       .send(testCommentToAdd)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("400: Bad request - missing required information");
+        expect(body.msg).toBe(
+          "400: Bad request - missing required information"
+        );
+      });
+  });
+});
+
+describe("PATCH /api/articles/:article_id", () => {
+  test("200: Updates an articles votes and responds with the updated article", () => {
+    return request(app)
+      .patch("/api/articles/2")
+      .send({ inc_votes: 41 })
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.updatedArticle.votes).toBe(41);
+        expect(body.updatedArticle.article_id).toBe(2);
+      });
+  });
+  test("400: Invalid data type received for inc_votes", () => {
+    return request(app)
+      .patch("/api/articles/2")
+      .send({
+        inc_votes:
+          "being here as a string is like being in the restricted section as harry potter",
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("400: Bad request. inc_votes must be a number");
+      });
+  });
+  test("404: Given an article ID which is out of range and therefore has no data", () => {
+    return request(app)
+      .patch("/api/articles/456789")
+      .send({ inc_votes: 50 })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("404: Article not found");
+      });
+  });
+  test("400: Given an invalid article ID", () => {
+    return request(app)
+      .patch("/api/articles/turtle")
+      .send({ inc_votes: 50 })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(
+          "400: Invalid article ID. Please insert a number"
+        );
       });
   });
 });
