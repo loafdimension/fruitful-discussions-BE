@@ -7,10 +7,10 @@ const {
   getArticlesByID,
   getArticles,
   getArticleCommentsByArticleID,
-  postArticleCommentByArticleID
+  postArticleCommentByArticleID,
 } = require("./controller/controller");
 
-// app thing that goes here to help with the format of post requests
+app.use(express.json());
 
 app.get("/api", getAPI);
 

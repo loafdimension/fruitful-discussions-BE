@@ -65,7 +65,7 @@ const selectArticleCommentsByArticleID = (article_id) => {
     .then(({ rows }) => {
       const comments = rows;
 
-      if (!comments) {
+      if (!comments || comments.length === 0) {
         return Promise.reject({
           status: 404,
           msg: "404: Error",
@@ -77,7 +77,36 @@ const selectArticleCommentsByArticleID = (article_id) => {
 };
 
 const insertArticleCommentByArticleID = (article_id, username, body) => {
-  return db.query(`INSERT INTO comments `)
+
+  // check the username is valid
+  return db.query(`SELECT * FROM users WHERE username = $1`, [username])
+  .then((usernameResult) => {
+    if (usernameResult.rows.length === 0){
+      return Promise.reject({
+        status: 404,
+        msg:"404: User not found"
+      })
+    }
+  const query =  `INSERT INTO comments (article_id, author, body)
+    VALUES ($1, $2, $3)
+    RETURNING *;`
+  return db
+    .query(query, [article_id, username, body])
+  })
+    .then((result) => {
+      // ERROR - dealing with where no data is passed in to the query
+      if (result.rows.length === 0) {
+        return Promise.reject({
+          status: 500,
+          msg: "Failed to insert comment - No comment inserted",
+        });
+      }
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.error("Error from db.query:", err); // Log the full error
+      return Promise.reject(err); // Re-throw the error
+    });
 };
 
 module.exports = {

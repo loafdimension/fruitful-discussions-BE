@@ -131,11 +131,11 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 });
 
-describe.skip("POST /api/articles/:article_id/comments", () => {
-  test("201: Successful post request. Should add a comment for an article which is selected by its parametric endpoint. The request should accept an object with a username and body property and respond with the posted comment.", () => {
+describe.only("POST /api/articles/:article_id/comments", () => {
+  test.only("201: Successful post request. Should add a comment for an article which is selected by its parametric endpoint. The request should accept an object with a username and body property and respond with the posted comment.", () => {
     const testCommentToAdd = {
-      username: book_worm_jelly_bean,
-      body: "i am a worm and i live in article 9 eating jelly beans",
+      username: "lurker",
+      body: "i have a boat called LurkyMcLurkFace",
     };
     return request(app)
       .post("/api/articles/9/comments")

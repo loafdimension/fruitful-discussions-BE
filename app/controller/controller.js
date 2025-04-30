@@ -54,7 +54,26 @@ const getArticleCommentsByArticleID = (req, res, next) => {
     });
 };
 
-const postArticleCommentByArticleID = (req, res, next) => {};
+const postArticleCommentByArticleID = (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+
+  if (!username || !body) {
+    return next(err);
+  }
+
+  if (typeof body !== "string") {
+    return next(err);
+  }
+
+  insertArticleCommentByArticleID(article_id, username, body)
+    .then((newComment) => {
+      res.status(201).send(newComment);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 module.exports = {
   getAPI,
