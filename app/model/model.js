@@ -78,7 +78,6 @@ const selectArticleCommentsByArticleID = (article_id) => {
 
 const insertArticleCommentByArticleID = (article_id, username, body) => {
 
-  // check the username is valid
   return db.query(`SELECT * FROM users WHERE username = $1`, [username])
   .then((usernameResult) => {
     if (usernameResult.rows.length === 0){
@@ -94,7 +93,6 @@ const insertArticleCommentByArticleID = (article_id, username, body) => {
     .query(query, [article_id, username, body])
   })
     .then((result) => {
-      // ERROR - dealing with where no data is passed in to the query
       if (result.rows.length === 0) {
         return Promise.reject({
           status: 500,
@@ -103,10 +101,6 @@ const insertArticleCommentByArticleID = (article_id, username, body) => {
       }
       return result.rows[0];
     })
-    .catch((err) => {
-      console.error("Error from db.query:", err); // Log the full error
-      return Promise.reject(err); // Re-throw the error
-    });
 };
 
 module.exports = {

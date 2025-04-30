@@ -103,7 +103,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe("GET /api/articles/:article_id/comments", () => {
+describe.only("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with an array of comments for the article id provided, which has the following properties: comment_id, votes, created_at, author, body, article_id. Should be sorted with most recent comments first", () => {
     return request(app)
       .get("/api/articles/9/comments")
@@ -131,8 +131,8 @@ describe("GET /api/articles/:article_id/comments", () => {
   });
 });
 
-describe.only("POST /api/articles/:article_id/comments", () => {
-  test.only("201: Successful post request. Should add a comment for an article which is selected by its parametric endpoint. The request should accept an object with a username and body property and respond with the posted comment.", () => {
+describe("POST /api/articles/:article_id/comments", () => {
+  test("201: Successful post request. Should add a comment for an article which is selected by its parametric endpoint. The request should accept an object with a username and body property and respond with the posted comment.", () => {
     const testCommentToAdd = {
       username: "lurker",
       body: "i have a boat called LurkyMcLurkFace",
@@ -150,41 +150,40 @@ describe.only("POST /api/articles/:article_id/comments", () => {
         expect(res.body).toHaveProperty("body", testCommentToAdd.body);
       });
   });
-  test("400: Resonds with a 400 error when passed bad request (invalid article id)", () => {
+  test("400: Resonds with a 400 error when passed a  body with valid fields, but the value of the field is invalid (invalid body data type)", () => {
     const testCommentToAdd = {
-      username: book_worm_jelly_bean,
-      body: "i am a worm and i live in article 9 eating jelly beans",
+      username: "lurker",
+      body: 3005,
     };
     return request(app)
-      .get("/api/articles/frozenpeas/comments")
+      .post("/api/articles/9/comments")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("400: Bad request");
+        expect(body.msg).toBe("400: Invalid data type in the body");
       });
   });
-  test("400: Resonds with a 400 error when passed bad request (without required request information)", () => {
+  test("400: Resonds with a 400 error when passed a  body with valid fields, but the value of the field is invalid (invalid user)", () => {
     const testCommentToAdd = {
-      username: book_worm_jelly_bean,
+      username: "jelly bean eating book worm",
+      body: "i live in article 9 eating jelly beans",
+    };
+    return request(app)
+      .post("/api/articles/9/comments")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("404: User not found");
+      });
+  });
+  test("400: Resonds with a 400 error when passed a body that does not contain the correct fields", () => {
+    const testCommentToAdd = {
+      username: "lurker",
     };
     return request(app)
       .post("/api/articles/9/comments")
       .send(testCommentToAdd)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("400: Bad request");
-      });
-  });
-  test("404: Responds with a 404 error when given valid request, but no data exists", () => {
-    const testCommentToAdd = {
-      username: book_worm_jelly_bean,
-      body: "i am a worm and i live in article 99999 eating jelly beans",
-    };
-    return request(app)
-      .post("/api/articles/99999")
-      .send(testCommentToAdd)
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).toBe("404: Error");
+        expect(body.msg).toBe("400: Bad request - missing required information");
       });
   });
 });

@@ -59,11 +59,17 @@ const postArticleCommentByArticleID = (req, res, next) => {
   const { username, body } = req.body;
 
   if (!username || !body) {
-    return next(err);
+    return next({
+      status: 400,
+      msg: "400: Bad request" 
+    });
   }
 
   if (typeof body !== "string") {
-    return next(err);
+    return next({
+      status: 400,
+      msg: "400: Invalid data type in the body"
+    });
   }
 
   insertArticleCommentByArticleID(article_id, username, body)
