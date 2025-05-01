@@ -134,6 +134,13 @@ const deleteCommentByCommentID = (comment_id) => {
     });
 };
 
+const selectUsers = () => {
+  return db.query(`SELECT * FROM users;`)
+  .then((result) => {
+    return result.rows
+  })
+}
+
 module.exports = {
   selectTopics,
   selectArticlesByID,
@@ -142,4 +149,5 @@ module.exports = {
   insertArticleCommentByArticleID,
   updateArticleVotes,
   deleteCommentByCommentID,
+  selectUsers
 };

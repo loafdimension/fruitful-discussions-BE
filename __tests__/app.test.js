@@ -5,6 +5,7 @@ const data = require("../db/data/test-data/index");
 const app = require("../app/app");
 const request = require("supertest");
 const topics = require("../db/data/test-data/topics");
+const users = require("../db/data/test-data/users");
 
 beforeEach(() => {
   return seed(data);
@@ -237,7 +238,7 @@ describe("PATCH /api/articles/:article_id", () => {
   });
 });
 
-describe.only("DELETE /api/comments/:comment_id", () => {
+describe("DELETE /api/comments/:comment_id", () => {
   test("204: Deletes the given comment by comment_id. Responds with a status 204 and no content", () => {
     return request(app)
       .delete("/api/comments/5")
@@ -264,6 +265,23 @@ describe.only("DELETE /api/comments/:comment_id", () => {
         expect(body.msg).toBe(
           "400: Invalid comment ID. Please insert a number"
         );
+      });
+  });
+});
+
+describe("GET /api/users", () => {
+  test("200: Gets all users. Responds with an array of objects where each object has the properties of username, name, and avatar_url", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then((res) => {
+        const usersArr = res.body;
+        expect(usersArr).toHaveLength(4);
+        usersArr.forEach((users) => {
+          expect(typeof users.username).toBe("string");
+          expect(typeof users.name).toBe("string");
+          expect(typeof users.avatar_url).toBe("string");
+        });
       });
   });
 });
