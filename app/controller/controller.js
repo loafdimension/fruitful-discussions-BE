@@ -7,6 +7,7 @@ const {
   selectArticleCommentsByArticleID,
   insertArticleCommentByArticleID,
   updateArticleVotes,
+  deleteCommentByCommentID,
 } = require("../model/model");
 
 const getAPI = (req, res, next) => {
@@ -107,6 +108,18 @@ const patchUpdateArticleVotes = (req, res, next) => {
     });
 };
 
+const removeCommentByCommentID = (req, res, next) => {
+  const { comment_id } = req.params;
+
+  deleteCommentByCommentID(comment_id)
+    .then((deletion) => {
+      res.status(204).send(deletion);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 module.exports = {
   getAPI,
   getTopics,
@@ -115,4 +128,5 @@ module.exports = {
   getArticleCommentsByArticleID,
   postArticleCommentByArticleID,
   patchUpdateArticleVotes,
+  removeCommentByCommentID,
 };

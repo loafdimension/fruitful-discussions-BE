@@ -237,3 +237,19 @@ describe("PATCH /api/articles/:article_id", () => {
   });
 });
 
+describe.only("DELETE /api/comments/:comment_id", () => {
+  test("204: Deletes the given comment by comment_id. Responds with a status 204 and no content", () => {
+    return request(app)
+      .delete("/api/comments/5")
+      .expect(204)
+      .then(({ body }) => {
+        expect(body).toEqual({});
+      });
+  });
+
+  test.todo(
+    "404: Attempts to delete a comment at a comment_id which does not exist (it is out of range)"
+  );
+
+  test.todo("400: Attempts to delete a resource referenced by an invalid ID");
+});
