@@ -57,7 +57,7 @@ describe("createRef", () => {
   the seed file and utils file were taken from emilys solution folder
   */
 
-  xtest('should return a lookup object with a single key and value when passed an array of length 1', () => {
+  test.skip('should return a lookup object with a single key and value when passed an array of length 1', () => {
     //arrange
     const input = ([{
       article_id: 1,
