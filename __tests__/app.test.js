@@ -247,9 +247,23 @@ describe.only("DELETE /api/comments/:comment_id", () => {
       });
   });
 
-  test.todo(
-    "404: Attempts to delete a comment at a comment_id which does not exist (it is out of range)"
-  );
+  test("404: Attempts to delete a comment at a comment_id which does not exist (it is out of range)", () => {
+    return request(app)
+      .delete("/api/comments/456789")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("404: Comment not found");
+      });
+  });
 
-  test.todo("400: Attempts to delete a resource referenced by an invalid ID");
+  test("400: Attempts to delete a resource referenced by an invalid ID", () => {
+    return request(app)
+      .delete("/api/comments/rocks")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe(
+          "400: Invalid comment ID. Please insert a number"
+        );
+      });
+  });
 });

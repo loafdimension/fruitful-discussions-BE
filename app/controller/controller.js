@@ -111,9 +111,16 @@ const patchUpdateArticleVotes = (req, res, next) => {
 const removeCommentByCommentID = (req, res, next) => {
   const { comment_id } = req.params;
 
+  if (isNaN(comment_id)) {
+    return next({
+      status: 400,
+      msg: "400: Invalid comment ID. Please insert a number",
+    });
+  }
+
   deleteCommentByCommentID(comment_id)
-    .then((deletion) => {
-      res.status(204).send(deletion);
+    .then(() => {
+      res.status(204).send();
     })
     .catch((err) => {
       next(err);
