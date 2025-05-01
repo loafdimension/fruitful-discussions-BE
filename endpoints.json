@@ -84,5 +84,21 @@
       "votes": 10,
       "article_img_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
     }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "Deletes a comment by its comment_id",
+    "acceptable queries": "any number within the range of existing comments",
+    "example response": {
+      "example response": "should respond with nothing"
+    }
+  },
+  "GET /api/users": {
+    "description": "Serves an array of all users",
+    "acceptable queries": "This get request takes no arguments",
+    "example response": {
+      "username": "butter_bridge",
+      "name": "jonny",
+      "avatar_url": "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg"
+    }
   }
 }
