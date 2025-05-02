@@ -4,8 +4,7 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 const app = require("../app/app");
 const request = require("supertest");
-const topics = require("../db/data/test-data/topics");
-const users = require("../db/data/test-data/users");
+require("jest-sorted");
 
 beforeEach(() => {
   return seed(data);
@@ -100,7 +99,154 @@ describe("GET /api/articles", () => {
           expect(typeof article.article_img_url).toBe("string");
           expect(typeof article.comment_count).toBe("number");
         });
+        expect(articlesArr).toBeSorted({
+          key: "created_at",
+          descending: true,
+        });
       });
+  });
+  describe("Sorting queries", () => {
+    test("sort_by: authors, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=author&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "author", ascending: true });
+        });
+    });
+    test("sort_by: author, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=author&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "author", descending: true });
+        });
+    });
+    test("sort_by: title, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=title&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "title", ascending: true });
+        });
+    });
+    test("sort_by: title, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=title&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "title", descending: true });
+        });
+    });
+    test("sort_by: article_id, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=article_id&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "article_id", ascending: true });
+        });
+    });
+    test("sort_by: article_id, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=article_id&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "article_id", descending: true });
+        });
+    });
+    test("sort_by: topic, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=topic&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "topic", ascending: true });
+        });
+    });
+    test("sort_by: topic, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=topic&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "topic", descending: true });
+        });
+    });
+    test("sort_by: created_at, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=created_at&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "created_at", ascending: true });
+        });
+    });
+    test("sort_by: votes, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=votes&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "votes", ascending: true });
+        });
+    });
+    test("sort_by: votes, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=votes&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "votes", descending: true });
+        });
+    });
+    test("sort_by: comment_count, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=comment_count&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({
+            key: "comment_count",
+            ascending: true,
+          });
+        });
+    });
+    test("sort_by: comment_count, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=comment_count&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({
+            key: "comment_count",
+            descending: true,
+          });
+        });
+    });
+    describe("Sorting queries error handling", () => {
+      test("400: Responds with a 400 error for an invalid sort_by value", () => {
+        return request(app)
+          .get("/api/articles?sort_by=apples&order=desc")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toBe("400: Invalid sort_by value");
+          });
+      });
+      test("400: Responds with a 400 error for an invalid order value", () => {
+        return request(app)
+          .get("/api/articles?sort_by=votes&order=apples")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toBe("400: Invalid order value");
+          });
+      });
+    });
   });
 });
 
