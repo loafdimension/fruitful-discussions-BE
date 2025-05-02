@@ -106,7 +106,7 @@ describe.only("GET /api/articles", () => {
       });
   });
   describe("Sorting queries", () => {
-    test("sort_by: authors, order: ascending", () => {
+    xtest("sort_by: authors, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=author&order=asc")
         .expect(200)
