@@ -23,11 +23,23 @@ const selectArticlesByID = (articleID) => {
     });
 };
 
-const selectArticles = () => {
-  return db
-    .query(
-      `SELECT 
-  articles.article_id,
+const selectArticles = (sort_by = "created_at", order = "DESC") => {
+  const greenlistColumnValues = [
+    "author",
+    "article_id",
+    "title",
+    "topic",
+    "created_at",
+    "votes",
+    "article_img_url",
+    "comment_count",
+  ];
+
+  const greenlistOrderValues = ["asc", "desc", "ASC", "DESC"];
+
+  let queryStr = `
+  SELECT 
+    articles.article_id,
     articles.title,
     articles.topic,
     articles.author,
@@ -36,24 +48,15 @@ const selectArticles = () => {
     articles.votes,
     articles.article_img_url,
     COUNT(comments.article_id)::INT AS comment_count
-FROM
-  articles
-LEFT JOIN
-  comments ON articles.article_id = comments.article_id
-GROUP BY
-  articles.article_id,
-  articles.title,
-  articles.topic,
-  articles.author,
-  articles.created_at,
-  articles.votes,
-  articles.article_img_url
-ORDER BY
-  created_at DESC;`
-    )
-    .then((result) => {
-      return result.rows;
-    });
+  FROM articles
+  LEFT JOIN comments ON articles.article_id = comments.article_id
+  GROUP BY articles.article_id
+  ORDER BY ${sort_by} ${order}`;
+
+  return db.query(queryStr).then((result) => {
+    console.log(result.rows, "<<<< result from model")
+    return result.rows;
+  });
 };
 
 const selectArticleCommentsByArticleID = (article_id) => {
@@ -135,11 +138,10 @@ const deleteCommentByCommentID = (comment_id) => {
 };
 
 const selectUsers = () => {
-  return db.query(`SELECT * FROM users;`)
-  .then((result) => {
-    return result.rows
-  })
-}
+  return db.query(`SELECT * FROM users;`).then((result) => {
+    return result.rows;
+  });
+};
 
 module.exports = {
   selectTopics,
@@ -149,5 +151,5 @@ module.exports = {
   insertArticleCommentByArticleID,
   updateArticleVotes,
   deleteCommentByCommentID,
-  selectUsers
+  selectUsers,
 };

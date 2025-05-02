@@ -106,22 +106,29 @@ describe.only("GET /api/articles", () => {
       });
   });
   describe("Sorting queries", () => {
-    xtest("sort_by: authors, order: ascending", () => {
-      // order by can be asc or desc and can happen with any column from above (author, title, article_id, topic, created_at, votes, article_img_url, comment_count) and sort_by 
-
-      // there is no shortcut for testing so just give it as much coverage as you can with a test for each column and then for the asc or desc order
+    test("sort_by: authors, order: ascending", () => {
       return request(app)
-      .get("/api/articles?sort_by=column&order=asc/desc")
-      .expect(200)
-      .then(() => {
-      })
+        .get("/api/articles?sort_by=author&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body.articles
+          expect(articles).toBeSorted({key: "author", "ascending": true})
+        });
     });
-    test.todo("")
-    test.todo("")
-    test.todo("")
-    test.todo("")
-    test.todo("")
-
+    test.todo("sort_by: author, order: descending");
+    test.todo("sort_by: title, order: ascending");
+    test.todo("sort_by: title, order: descending");
+    test.todo("sort_by: article_id, order: ascending");
+    test.todo("sort_by: article_id, order: descending");
+    test.todo("sort_by: topic, order: ascending");
+    test.todo("sort_by: topic, order: descending");
+    test.todo("sort_by: created_at, order: ascending");
+    test.todo("sort_by: votes, order: ascending");
+    test.todo("sort_by: votes, order: descending");
+    test.todo("sort_by: article_img_url, order: ascending");
+    test.todo("sort_by: article_img_url, order: descending");
+    test.todo("sort_by: comment_count, order: ascending");
+    test.todo("sort_by: comment_count, order: descending");
   });
 });
 
