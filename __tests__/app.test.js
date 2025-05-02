@@ -81,8 +81,8 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
-describe.only("GET /api/articles", () => {
-  test.only("200: Responds with an array of all article objects, which each have the following properties: author, title, article_id, topic, created_at, votes, article_img_url, and comment_count. Should be sorted by date in descending order", () => {
+describe("GET /api/articles", () => {
+  test("200: Responds with an array of all article objects, which each have the following properties: author, title, article_id, topic, created_at, votes, article_img_url, and comment_count. Should be sorted by date in descending order", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -105,30 +105,131 @@ describe.only("GET /api/articles", () => {
         });
       });
   });
+  test.todo("")
   describe("Sorting queries", () => {
-    xtest("sort_by: authors, order: ascending", () => {
+    test("sort_by: authors, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=author&order=asc")
         .expect(200)
         .then((res) => {
-          const articles = res.body.articles
-          expect(articles).toBeSorted({key: "author", "ascending": true})
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "author", ascending: true });
         });
     });
-    test.todo("sort_by: author, order: descending");
-    test.todo("sort_by: title, order: ascending");
-    test.todo("sort_by: title, order: descending");
-    test.todo("sort_by: article_id, order: ascending");
-    test.todo("sort_by: article_id, order: descending");
-    test.todo("sort_by: topic, order: ascending");
-    test.todo("sort_by: topic, order: descending");
-    test.todo("sort_by: created_at, order: ascending");
-    test.todo("sort_by: votes, order: ascending");
-    test.todo("sort_by: votes, order: descending");
-    test.todo("sort_by: article_img_url, order: ascending");
-    test.todo("sort_by: article_img_url, order: descending");
-    test.todo("sort_by: comment_count, order: ascending");
-    test.todo("sort_by: comment_count, order: descending");
+    test("sort_by: author, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=author&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "author", descending: true });
+        });
+    });
+    test("sort_by: title, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=title&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "title", ascending: true });
+        });
+    });
+    test("sort_by: title, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=title&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "title", descending: true });
+        });
+    });
+    test("sort_by: article_id, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=article_id&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "article_id", ascending: true });
+        });
+    });
+    test("sort_by: article_id, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=article_id&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "article_id", descending: true });
+        });
+    });
+    test("sort_by: topic, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=topic&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "topic", ascending: true });
+        });
+    });
+    test("sort_by: topic, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=topic&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "topic", descending: true });
+        });
+    });
+    test("sort_by: created_at, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=created_at&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "created_at", ascending: true });
+        });
+    });
+    test("sort_by: votes, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=votes&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "votes", ascending: true });
+        });
+    });
+    test("sort_by: votes, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=votes&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({ key: "votes", descending: true });
+        });
+    });
+    test("sort_by: comment_count, order: ascending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=comment_count&order=asc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({
+            key: "comment_count",
+            ascending: true,
+          });
+        });
+    });
+    test("sort_by: comment_count, order: descending", () => {
+      return request(app)
+        .get("/api/articles?sort_by=comment_count&order=desc")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          expect(articles).toBeSorted({
+            key: "comment_count",
+            descending: true,
+          });
+        });
+    });
   });
 });
 

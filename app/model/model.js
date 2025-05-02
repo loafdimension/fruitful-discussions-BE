@@ -50,11 +50,12 @@ const selectArticles = (sort_by = "created_at", order = "DESC") => {
     COUNT(comments.article_id)::INT AS comment_count
   FROM articles
   LEFT JOIN comments ON articles.article_id = comments.article_id
-  GROUP BY articles.article_id
+  GROUP BY 
+  articles.article_id
   ORDER BY ${sort_by} ${order}`;
 
   return db.query(queryStr).then((result) => {
-    console.log(result.rows, "<<<< result from model")
+    // console.log(result.rows, "<<<< result from model")
     return result.rows;
   });
 };
