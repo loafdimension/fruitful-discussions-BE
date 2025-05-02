@@ -33,13 +33,15 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "jest-sorted": "^1.0.15",
     "pg": "^8.14.1",
     "pg-format": "^1.0.4",
     "supertest": "^7.1.0"
   },
   "jest": {
     "setupFilesAfterEnv": [
-      "jest-extended/all"
+      "jest-extended/all",
+      "jest-sorted"
     ]
   }
 }

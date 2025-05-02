@@ -4,8 +4,7 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 const app = require("../app/app");
 const request = require("supertest");
-const topics = require("../db/data/test-data/topics");
-const users = require("../db/data/test-data/users");
+require("jest-sorted");
 
 beforeEach(() => {
   return seed(data);
@@ -82,8 +81,8 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
-describe("GET /api/articles", () => {
-  test("200: Responds with an array of all article objects, which each have the following properties: author, title, article_id, topic, created_at, votes, article_img_url, and comment_count. Should be sorted by date in descending order", () => {
+describe.only("GET /api/articles", () => {
+  test.only("200: Responds with an array of all article objects, which each have the following properties: author, title, article_id, topic, created_at, votes, article_img_url, and comment_count. Should be sorted by date in descending order", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
@@ -100,7 +99,29 @@ describe("GET /api/articles", () => {
           expect(typeof article.article_img_url).toBe("string");
           expect(typeof article.comment_count).toBe("number");
         });
+        expect(articlesArr).toBeSorted({
+          key: "created_at",
+          descending: true,
+        });
       });
+  });
+  describe("Sorting queries", () => {
+    xtest("sort_by: authors, order: ascending", () => {
+      // order by can be asc or desc and can happen with any column from above (author, title, article_id, topic, created_at, votes, article_img_url, comment_count) and sort_by 
+
+      // there is no shortcut for testing so just give it as much coverage as you can with a test for each column and then for the asc or desc order
+      return request(app)
+      .get("/api/articles?sort_by=column&order=asc/desc")
+      .expect(200)
+      .then(() => {
+      })
+    });
+    test.todo("")
+    test.todo("")
+    test.todo("")
+    test.todo("")
+    test.todo("")
+
   });
 });
 
