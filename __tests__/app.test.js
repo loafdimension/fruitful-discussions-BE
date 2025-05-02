@@ -105,7 +105,6 @@ describe("GET /api/articles", () => {
         });
       });
   });
-  test.todo("")
   describe("Sorting queries", () => {
     test("sort_by: authors, order: ascending", () => {
       return request(app)
@@ -229,6 +228,24 @@ describe("GET /api/articles", () => {
             descending: true,
           });
         });
+    });
+    describe("Sorting queries error handling", () => {
+      test("400: Responds with a 400 error for an invalid sort_by value", () => {
+        return request(app)
+          .get("/api/articles?sort_by=apples&order=desc")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toBe("400: Invalid sort_by value");
+          });
+      });
+      test("400: Responds with a 400 error for an invalid order value", () => {
+        return request(app)
+          .get("/api/articles?sort_by=votes&order=apples")
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toBe("400: Invalid order value");
+          });
+      });
     });
   });
 });

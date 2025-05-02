@@ -37,6 +37,14 @@ const selectArticles = (sort_by = "created_at", order = "DESC") => {
 
   const greenlistOrderValues = ["asc", "desc", "ASC", "DESC"];
 
+  if (!greenlistColumnValues.includes(sort_by)) {
+    return Promise.reject({ status: 400, msg: "400: Invalid sort_by value" });
+  }
+
+  if (!greenlistOrderValues.includes(order)) {
+    return Promise.reject({ status: 400, msg: "400: Invalid order value" });
+  }
+
   let queryStr = `
   SELECT 
     articles.article_id,
@@ -54,10 +62,14 @@ const selectArticles = (sort_by = "created_at", order = "DESC") => {
   articles.article_id
   ORDER BY ${sort_by} ${order}`;
 
-  return db.query(queryStr).then((result) => {
-    // console.log(result.rows, "<<<< result from model")
-    return result.rows;
-  });
+  return db
+    .query(queryStr)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
 };
 
 const selectArticleCommentsByArticleID = (article_id) => {
