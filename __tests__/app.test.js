@@ -106,7 +106,7 @@ describe("GET /api/articles", () => {
       });
   });
   describe("Sorting queries", () => {
-    test("sort_by: authors, order: ascending", () => {
+    test("200: sort_by: authors, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=author&order=asc")
         .expect(200)
@@ -115,7 +115,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "author", ascending: true });
         });
     });
-    test("sort_by: author, order: descending", () => {
+    test("200: sort_by: author, order: descending", () => {
       return request(app)
         .get("/api/articles?sort_by=author&order=desc")
         .expect(200)
@@ -124,7 +124,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "author", descending: true });
         });
     });
-    test("sort_by: title, order: ascending", () => {
+    test("200: sort_by: title, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=title&order=asc")
         .expect(200)
@@ -133,7 +133,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "title", ascending: true });
         });
     });
-    test("sort_by: title, order: descending", () => {
+    test("200: sort_by: title, order: descending", () => {
       return request(app)
         .get("/api/articles?sort_by=title&order=desc")
         .expect(200)
@@ -142,7 +142,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "title", descending: true });
         });
     });
-    test("sort_by: article_id, order: ascending", () => {
+    test("200: sort_by: article_id, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=article_id&order=asc")
         .expect(200)
@@ -151,7 +151,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "article_id", ascending: true });
         });
     });
-    test("sort_by: article_id, order: descending", () => {
+    test("200: sort_by: article_id, order: descending", () => {
       return request(app)
         .get("/api/articles?sort_by=article_id&order=desc")
         .expect(200)
@@ -160,7 +160,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "article_id", descending: true });
         });
     });
-    test("sort_by: topic, order: ascending", () => {
+    test("200: sort_by: topic, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=topic&order=asc")
         .expect(200)
@@ -169,7 +169,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "topic", ascending: true });
         });
     });
-    test("sort_by: topic, order: descending", () => {
+    test("200: sort_by: topic, order: descending", () => {
       return request(app)
         .get("/api/articles?sort_by=topic&order=desc")
         .expect(200)
@@ -178,7 +178,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "topic", descending: true });
         });
     });
-    test("sort_by: created_at, order: ascending", () => {
+    test("200: sort_by: created_at, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=created_at&order=asc")
         .expect(200)
@@ -187,7 +187,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "created_at", ascending: true });
         });
     });
-    test("sort_by: votes, order: ascending", () => {
+    test("200: sort_by: votes, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=votes&order=asc")
         .expect(200)
@@ -196,7 +196,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "votes", ascending: true });
         });
     });
-    test("sort_by: votes, order: descending", () => {
+    test("200: sort_by: votes, order: descending", () => {
       return request(app)
         .get("/api/articles?sort_by=votes&order=desc")
         .expect(200)
@@ -205,7 +205,7 @@ describe("GET /api/articles", () => {
           expect(articles).toBeSorted({ key: "votes", descending: true });
         });
     });
-    test("sort_by: comment_count, order: ascending", () => {
+    test("200: sort_by: comment_count, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=comment_count&order=asc")
         .expect(200)
@@ -217,7 +217,7 @@ describe("GET /api/articles", () => {
           });
         });
     });
-    test("sort_by: comment_count, order: descending", () => {
+    test("200: sort_by: comment_count, order: descending", () => {
       return request(app)
         .get("/api/articles?sort_by=comment_count&order=desc")
         .expect(200)
@@ -247,6 +247,9 @@ describe("GET /api/articles", () => {
           });
       });
     });
+  });
+  describe("Topic query", () => {
+    test.todo("200: ");
   });
 });
 
@@ -431,4 +434,3 @@ describe("GET /api/users", () => {
       });
   });
 });
-
