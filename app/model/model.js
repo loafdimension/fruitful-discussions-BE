@@ -23,7 +23,7 @@ const selectArticlesByID = (articleID) => {
     });
 };
 
-const selectArticles = (sort_by = "created_at", order = "DESC") => {
+const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
   const greenlistColumnValues = [
     "author",
     "article_id",
@@ -58,12 +58,21 @@ const selectArticles = (sort_by = "created_at", order = "DESC") => {
     COUNT(comments.article_id)::INT AS comment_count
   FROM articles
   LEFT JOIN comments ON articles.article_id = comments.article_id
-  GROUP BY 
-  articles.article_id
-  ORDER BY ${sort_by} ${order}`;
+  `;
+
+  const queryParams = [];
+
+  if (topic) {
+    queryStr += "WHERE articles.topic = $1";
+    queryParams.push(topic);
+  }
+
+  queryStr += ` GROUP BY articles.article_id`;
+
+  queryStr += ` ORDER BY ${sort_by} ${order}`;
 
   return db
-    .query(queryStr)
+    .query(queryStr, queryParams)
     .then((result) => {
       return result.rows;
     })

@@ -249,7 +249,23 @@ describe("GET /api/articles", () => {
     });
   });
   describe("Topic query", () => {
-    test.todo("200: ");
+    xtest("200: Filters the articles by the topic value specified in the query. If the query is omitted, the endpoint should respond with all articles", () => {
+      return request(app)
+        .get("/api/articles?topic=cats")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body.articles;
+          console.log(articles, "<<< articles from test")
+          expect(articles).toHaveLength(1);
+          articles.forEach((article) => {
+            console.log(article, "article from in the for each of test")
+            expect(article.topic).toBe("cats");
+          });
+        });
+    });
+    describe("Topic query error handling", () => {
+      test.todo("");
+    });
   });
 });
 

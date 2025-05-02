@@ -37,9 +37,9 @@ const getArticlesByID = (req, res, next) => {
 };
 
 const getArticles = (req, res, next) => {
-  const { sort_by, order } = req.query;
+  const { sort_by, order, topic } = req.query;
 
-  return selectArticles(sort_by, order)
+  return selectArticles(sort_by, order, topic)
     .then((articles) => {
       res.status(200).send(articles);
     })
