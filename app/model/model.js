@@ -45,8 +45,19 @@ const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
     return Promise.reject({ status: 400, msg: "400: Invalid order value" });
   }
 
-  let queryValues = [];
-  let queryStr = `
+  const checkTopicExists = topic
+    ? db
+        .query(`SELECT * FROM topics WHERE slug = $1`, [topic])
+        .then((result) => {
+          if (result.rows.length === 0) {
+            return Promise.reject({ status: 404, msg: "404: Topic not found" });
+          }
+        })
+    : Promise.resolve();
+
+  return checkTopicExists.then(() => {
+    let queryValues = [];
+    let queryStr = `
   SELECT 
     articles.article_id,
     articles.title,
@@ -60,22 +71,23 @@ const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
   FROM articles
   LEFT JOIN comments ON articles.article_id = comments.article_id`;
 
-  if (topic) {
-    queryValues.push(topic);
-    queryStr += ` WHERE articles.topic = $1 `;
-  }
+    if (topic) {
+      queryValues.push(topic);
+      queryStr += ` WHERE articles.topic = $1 `;
+    }
 
-  queryStr += ` GROUP BY articles.article_id
+    queryStr += ` GROUP BY articles.article_id
     ORDER BY ${sort_by} ${order}`;
 
-  return db
-    .query(queryStr, queryValues)
-    .then((result) => {
-      return result.rows;
-    })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
+    return db
+      .query(queryStr, queryValues)
+      .then((result) => {
+        return result.rows;
+      })
+      .catch((err) => {
+        return Promise.reject(err);
+      });
+  });
 };
 
 const selectArticleCommentsByArticleID = (article_id) => {

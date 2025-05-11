@@ -230,7 +230,7 @@ describe("GET /api/articles", () => {
           });
         });
     });
-    describe("Sorting queries error handling", () => {
+    describe("Sorting queries: articles by order error handling", () => {
       test("400: Responds with a 400 error for an invalid sort_by value", () => {
         return request(app)
           .get("/api/articles?sort_by=apples&order=desc")
@@ -271,6 +271,16 @@ describe("GET /api/articles", () => {
           expect(article.topic).toBe("cats");
         });
       });
+  });
+  describe("Sorting queries: articles by topic error handling", () => {
+    test("404: Responds with a 404 error if the topic does not exist", () => {
+      return request(app)
+        .get("/api/articles?topic=gameofthrones")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("404: Topic not found");
+        });
+    });
   });
 });
 
