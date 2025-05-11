@@ -249,7 +249,7 @@ describe("GET /api/articles", () => {
       });
     });
   });
-  describe.only("Sorting queries: articles by topic", () => {});
+  describe("Sorting queries: articles by topic", () => {});
   test("200: Responds with articles only from the mitch topic", () => {
     return request(app)
       .get("/api/articles?topic=mitch")
