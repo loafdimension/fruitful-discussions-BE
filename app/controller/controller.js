@@ -9,6 +9,7 @@ const {
   updateArticleVotes,
   deleteCommentByCommentID,
   selectUsers,
+  selectArticlesByTopic,
 } = require("../model/model");
 
 const getAPI = (req, res, next) => {
@@ -37,12 +38,14 @@ const getArticlesByID = (req, res, next) => {
 };
 
 const getArticles = (req, res, next) => {
-  const { sort_by, order } = req.query;
+  const { sort_by, order, topic } = req.query;
 
-  return selectArticles(sort_by, order)
+  return selectArticles(sort_by, order, topic)
     .then((articles) => {
+      console.log(articles, "<<<< from controller")
       res.status(200).send(articles);
     })
+
     .catch((err) => {
       next(err);
     });

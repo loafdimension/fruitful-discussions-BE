@@ -23,7 +23,7 @@ const selectArticlesByID = (articleID) => {
     });
 };
 
-const selectArticles = (sort_by = "created_at", order = "DESC") => {
+const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
   const greenlistColumnValues = [
     "author",
     "article_id",
@@ -45,6 +45,7 @@ const selectArticles = (sort_by = "created_at", order = "DESC") => {
     return Promise.reject({ status: 400, msg: "400: Invalid order value" });
   }
 
+  let queryValues = [];
   let queryStr = `
   SELECT 
     articles.article_id,
@@ -57,14 +58,20 @@ const selectArticles = (sort_by = "created_at", order = "DESC") => {
     articles.article_img_url,
     COUNT(comments.article_id)::INT AS comment_count
   FROM articles
-  LEFT JOIN comments ON articles.article_id = comments.article_id
-  GROUP BY 
-  articles.article_id
-  ORDER BY ${sort_by} ${order}`;
+  LEFT JOIN comments ON articles.article_id = comments.article_id`;
+
+  if (topic) {
+    queryValues.push(topic);
+    queryStr += ` WHERE articles.topic = $1 `;
+  }
+
+  queryStr += `GROUP BY articles.article_id
+    ORDER BY ${sort_by} ${order}`;
 
   return db
-    .query(queryStr)
+    .query(queryStr, queryValues)
     .then((result) => {
+      console.log(result.rows, "<<< from model");
       return result.rows;
     })
     .catch((err) => {

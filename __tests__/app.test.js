@@ -4,6 +4,7 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index");
 const app = require("../app/app");
 const request = require("supertest");
+const { forEach } = require("../db/data/test-data/articles");
 require("jest-sorted");
 
 beforeEach(() => {
@@ -105,7 +106,7 @@ describe("GET /api/articles", () => {
         });
       });
   });
-  describe("Sorting queries", () => {
+  describe("Sorting queries: articles by order ", () => {
     test("200: sort_by: authors, order: ascending", () => {
       return request(app)
         .get("/api/articles?sort_by=author&order=asc")
@@ -248,8 +249,22 @@ describe("GET /api/articles", () => {
       });
     });
   });
-  describe("Topic query", () => {
-    test.todo("200: ");
+  describe.only("Sorting queries: articles by topic", () => {
+    test.todo("Responds with all articles if the query is omitted");
+    // CHANGE TO TEST DATA - MITCH AND CATS
+    test("200: Responds with articles only from the football topic", () => {
+      return request(app)
+        .get("/api/articles?topic=mitch")
+        .expect(200)
+        .then((res) => {
+          const articles = res.body;
+          articles.forEach((article) => {
+            expect(article.topic).toBe("mitch");
+          });
+        });
+    });
+    test.todo("200: Responds with articles only from the cooking topic");
+    test.todo("200: Responds with articles only from the coding topic");
   });
 });
 
