@@ -65,13 +65,12 @@ const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
     queryStr += ` WHERE articles.topic = $1 `;
   }
 
-  queryStr += `GROUP BY articles.article_id
+  queryStr += ` GROUP BY articles.article_id
     ORDER BY ${sort_by} ${order}`;
 
   return db
     .query(queryStr, queryValues)
     .then((result) => {
-      console.log(result.rows, "<<< from model");
       return result.rows;
     })
     .catch((err) => {

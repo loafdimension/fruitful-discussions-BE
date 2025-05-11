@@ -249,22 +249,28 @@ describe("GET /api/articles", () => {
       });
     });
   });
-  describe.only("Sorting queries: articles by topic", () => {
-    test.todo("Responds with all articles if the query is omitted");
-    // CHANGE TO TEST DATA - MITCH AND CATS
-    test("200: Responds with articles only from the football topic", () => {
-      return request(app)
-        .get("/api/articles?topic=mitch")
-        .expect(200)
-        .then((res) => {
-          const articles = res.body;
-          articles.forEach((article) => {
-            expect(article.topic).toBe("mitch");
-          });
+  describe.only("Sorting queries: articles by topic", () => {});
+  test("200: Responds with articles only from the mitch topic", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then((res) => {
+        const articles = res.body;
+        articles.forEach((article) => {
+          expect(article.topic).toBe("mitch");
         });
-    });
-    test.todo("200: Responds with articles only from the cooking topic");
-    test.todo("200: Responds with articles only from the coding topic");
+      });
+  });
+  test("200: Responds with articles only from the cats topic", () => {
+    return request(app)
+      .get("/api/articles?topic=cats")
+      .expect(200)
+      .then((res) => {
+        const articles = res.body;
+        articles.forEach((article) => {
+          expect(article.topic).toBe("cats");
+        });
+      });
   });
 });
 
