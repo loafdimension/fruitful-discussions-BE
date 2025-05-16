@@ -6,10 +6,9 @@ const selectTopics = () => {
   });
 };
 
-const selectArticlesByID = (articleID) => {
-  return db
-    .query(`SELECT * FROM articles WHERE article_id = $1`, [articleID])
-    .then(({ rows }) => {
+const selectArticlesByID = (article_id) => {
+  return selectArticles(undefined, undefined, undefined, article_id).then(
+    (rows) => {
       const article = rows[0];
 
       if (!article) {
@@ -20,10 +19,16 @@ const selectArticlesByID = (articleID) => {
       } else {
         return article;
       }
-    });
+    }
+  );
 };
 
-const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
+const selectArticles = (
+  sort_by = "created_at",
+  order = "DESC",
+  topic,
+  article_id
+) => {
   const greenlistColumnValues = [
     "author",
     "article_id",
@@ -57,6 +62,18 @@ const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
 
   return checkTopicExists.then(() => {
     let queryValues = [];
+    let conditions = [];
+
+    if (topic) {
+      queryValues.push(topic);
+      conditions.push(`articles.topic = $${queryValues.length}`);
+    }
+
+    if (article_id) {
+      queryValues.push(article_id);
+      conditions.push(`articles.article_id = $${queryValues.length}`);
+    }
+
     let queryStr = `
   SELECT 
     articles.article_id,
@@ -67,17 +84,22 @@ const selectArticles = (sort_by = "created_at", order = "DESC", topic) => {
     articles.created_at,
     articles.votes,
     articles.article_img_url,
-    COUNT(comments.article_id)::INT AS comment_count
+    COUNT(comments.comment_id)::INT AS comment_count
   FROM articles
   LEFT JOIN comments ON articles.article_id = comments.article_id`;
 
-    if (topic) {
-      queryValues.push(topic);
-      queryStr += ` WHERE articles.topic = $1 `;
+    if (conditions.length > 0) {
+      queryStr += ` WHERE ${conditions.join(" AND ")} `;
     }
 
-    queryStr += ` GROUP BY articles.article_id
-    ORDER BY ${sort_by} ${order}`;
+    queryStr += `
+    GROUP BY articles.article_id
+    ORDER BY ${
+      sort_by === "comment_count"
+        ? "COUNT(comments.comment_id)"
+        : `articles.${sort_by}`
+    } ${order}
+  `;
 
     return db
       .query(queryStr, queryValues)

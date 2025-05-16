@@ -80,6 +80,17 @@ describe("GET /api/articles/:article_id", () => {
         expect(body.msg).toBe("404: Error");
       });
   });
+  describe("Responses for requests to this endpoint now include a comment_count", () => {
+    test("200: Article responses include a comment count which is the total count of all of the comments with this article id", () => {
+      return request(app)
+        .get("/api/articles/4")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toHaveProperty("comment_count");
+          expect(typeof body.comment_count).toBe("number");
+        });
+    });
+  });
 });
 
 describe("GET /api/articles", () => {
