@@ -63,7 +63,7 @@ Git clone: https://github.com/loafdimension/seeding-nc-news.git
 
 **3 - Install the required dependencies**
 
-Once inside the project directory, install the required dependencies from the packag.json using `npm install`.
+Once inside the project directory, install the required dependencies from the package.json using `npm install`.
 
 **4 - Set up the Environment Variables**
 
