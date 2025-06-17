@@ -63,22 +63,23 @@ Git clone: https://github.com/loafdimension/seeding-nc-news.git
 
 **3 - Install the required dependencies**
 
-Once inside the project directory, install the required dependencies from the packag.json.
-`npm install`
+Once inside the project directory, install the required dependencies from the packag.json using `npm install`.
 
 **4 - Set up the Environment Variables**
 
-In the root of the directory create 2 .env files:
+In the root of the directory create 2 **.env files**:
 `.env.test` and `.env.development`.
 
 - In each of these files, write the environmental variable, "PGDATABASE" and set its value to the name of the database it should interact with.
-- In this case, this means .env.test should be populated with "PGDATABASE=nc_news_test and .env.development should be populated with "PGDATABASE=nc_news"
+- .env.test should be populated with "PGDATABASE=nc_news_test".
+- .env.development should be populated with "PGDATABASE=nc_news".
 
 **5 - Seed the local database**
 
 Set up and seed your local PostgreSQL databases by running the following commands in this order:
-1 - `npm run setup-dbs`
-2 - Either `npm run seed-dev` (for development data), or `npm run seed-prod` (for production data)
+
+- 1 - `npm run setup-dbs`
+- 2 - Either `npm run seed-dev` (for development data), or `npm run seed-prod` (for production data)
 
 ---
 
@@ -113,7 +114,7 @@ Below is a comprehensive list of all available API endpoints and their primary f
 
 - Be kind, and please do offer feedback and suggestions for improvement.
 - [Discussions](https://github.com/loafdimension/fruitful-discussions-BE/discussions)
-- Fruitful Discussions is a work in progress and I will be refactoring based on any provided feedback, as well as adding new features which can be seen via the issues page.
+- Fruitful Discussions is a work in progress and I will be refactoring based on any provided feedback, as well as adding new features which are listed on the issues page.
 - [Open an issue / View current issues](https://github.com/loafdimension/seeding-nc-news/issues)
 
 ---
