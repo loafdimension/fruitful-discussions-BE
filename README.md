@@ -2,14 +2,17 @@
 
 # Table of Contents 📚
 
-- [About](#about-📝)
-- [Testing and Test Coverage](#testing-and-test-coverage-✅)
+- [About](#about)
+- [Testing and Test Coverage](#testing-and-test-coverage)
 - [How to Install and Run](#how-to-install-and-run)
 - [Documentation](#documentation)
 - [Feedback and Contributions](#feedback-and-contributions)
 - [Credits](#credits)
 - [Contact](#contact)
-- [Links](#links)
+
+---
+
+<a id="about"></a>
 
 # About 📝
 
@@ -20,6 +23,10 @@
 **How do I get access to the hosted version?**
 
 - [The FruitFul-Discussions-BE](https://nc-news-project-t1h4.onrender.com/). However, this merely shows information in JSON format when a request is made to that endpoint. To see this data being used in the front end, take a look at [Fruitful-Discussions-FE (GitHub Repository)](https://github.com/loafdimension/fruitful-discussions-FE), and the [Hosted Fruitful-Discussions-FE]().
+
+---
+
+<a id="testing-and-test-coverage"></a>
 
 # Testing and Test Coverage ✅
 
@@ -36,6 +43,10 @@
 |  [Seed](./__tests__//seed.test.js)  |  40   |
 | [Utils](./__tests__//utils.test.js) |   7   |
 |                Total                |  86   |
+
+---
+
+<a id="how-to-install-and-run"></a>
 
 # How to Install and Run 🚀
 
@@ -69,6 +80,10 @@ Set up and seed your local PostgreSQL databases by running the following command
 1 - `npm run setup-dbs`
 2 - Either `npm run seed-dev` (for development data), or `npm run seed-prod` (for production data)
 
+---
+
+<a id="documentation"></a>
+
 # Documentation 🕮
 
 **API Endpoints**
@@ -90,7 +105,9 @@ Below is a comprehensive list of all available API endpoints and their primary f
 
 ---
 
-# Feedback and Discussions 🤝
+<a id="feedback-and-contributions"></a>
+
+# Feedback and Contributions 🤝
 
 **As a contributor**
 
@@ -99,14 +116,24 @@ Below is a comprehensive list of all available API endpoints and their primary f
 - Fruitful Discussions is a work in progress and I will be refactoring based on any provided feedback, as well as adding new features which can be seen via the issues page.
 - [Open an issue / View current issues](https://github.com/loafdimension/seeding-nc-news/issues)
 
+---
+
+<a id="credits"></a>
+
 # Credits 🎥
 
 **Who worked on this project and how was it created?**
 
 - I created and worked on this project alone, but using Northcoders resources and with support from all of their wonderful staff.
 
+---
+
+<a id="contact"></a>
+
 # Contact 📞
 
 - If you have any questions or feedback, and would like to contact me, please feel free to reach out via LinkedIn or GitHub Discussions.
 - [Linkedin](https://www.linkedin.com/in/morgan-hewitt-8a68041ab/)
 - [Discussions](https://github.com/loafdimension/fruitful-discussions-BE/discussions)
+
+---
