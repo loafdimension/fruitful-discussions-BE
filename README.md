@@ -2,8 +2,8 @@
 
 # Table of Contents 📚
 
-- [About](#about)
-- [Testing and Test Coverage](#testing-and-test-coverage)
+- [About](#about-📝)
+- [Testing and Test Coverage](#testing-and-test-coverage-✅)
 - [How to Install and Run](#how-to-install-and-run)
 - [Documentation](#documentation)
 - [Feedback and Contributions](#feedback-and-contributions)
