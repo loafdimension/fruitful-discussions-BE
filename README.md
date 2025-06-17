@@ -1,4 +1,4 @@
-# Welcome to Fruitful Discussions! - insert logo later (lots of fruits having a nice positive looking chat)
+# Welcome to Fruitful Discussions!
 
 # Table of Contents (to have links taking people to each section)
 - About
@@ -7,8 +7,6 @@
 - Documentation
 - Feedback and Contributions
 - Credits
-- Badges
-- Licensing
 - Contact
 - Links
 
@@ -17,6 +15,7 @@
 **What is Fruitful Discussions?**
 
 - INSERT ANSWER, a summary of what the project is
+- Fruitful Discussions is a project I completed during the Northcoders course. Using databases seeded earlier in the course, I built an API for the purpose of accessing application data programatically. The intention here is to mimic the building of a real world backend service (such as Reddit) which should provide this information to the Front End architecture. 
 
 
 **How do I get access to the hosted version?**
@@ -28,40 +27,48 @@
 **include sections and tables for testing**
 
 **Where can I find the tests and how do I run them?**
-- npm test and jest 
-- show people where to look in the package JSON
+- The tests are located in the __tests__ folder and were separated in to testing the utility functions, the seeding, and the app which handled any requests to the API.
+- The principle of Test Driven Development (TDD) was followed throughout and the Jest framework was used, along with the Supertest library. 
+- To run all of the tests, you can run the command "npm run test", or "npm t" for short, followed by the file you wish to see. For example, "npm t app", "npm t seed", "npm t utils". Please see the scripts in the package JSON to see more options.
+- To filter by test within each file, add .only or .skip to whichever tests you wish to filter.
 
-**Examples**
+| File    | Link | Tests |
+| :------:| :---:| :----:|
+| App     |      |  39   |
+| Seed    |      |  40   |
+| Utils   |      |  7    |
+| Total   |      |  86   |
 
 
 # How to Install and Run (maybe do this in code which can be copied)
 
 **1 - Ensure that you have the required versions of Node.js and Postgres**
 
-- INSERT ANSWER
+- These were my versions when I created the project so these are what I suggest:
+- Node.js / v22.14.0
+- Postgres / 17.4
 
 **2 - Set up the .env files**
 
 - In the root of the directory create 2 .env files, one called ".env.test" and another called ".env.development".
-
-**What values need to be added for a developer to connect to both databases locally?**
-
 - In each of these files, write the environmental variable, "PGDATABASE" and set its value to the name of the database it should interact with.
-- In this case, this means .env.test should be populated with "PGDATABASE=nc_news:test and .env.development should be populated with "PGDATABASE=nc_news"
+- In this case, this means .env.test should be populated with "PGDATABASE=nc_news_test and .env.development should be populated with "PGDATABASE=nc_news"
 
 **3 - Fork and clone the repository**
 
-- INSERT ANSWER
+- Git clone:
+- https://github.com/loafdimension/seeding-nc-news.git (https)
+
 
 **4 - Install the required dependencies**
 
-- INSERT ANSWER
+- Run "npm install" and this will install the required dependencies fron the packag.json.
 
 **5 - Seed the local database**
 
-- INSERT ANSWER
-
-- PUT ALL THE STEPS INSIDE A CODE BLOCK
+- Run the following commands in this 0rder:
+- "npm run setup-dbs"
+- Either "npm run seed-dev" (for development data), or "npm run seed-prod" (for production data)
 
 # Documentation
 
@@ -84,14 +91,6 @@
 **Who worked on this project and how was it created?**
 - me, credit to NC and staff and all that jazz
 - whoever helps me to design the logo
-
-# Badges
-
-**give some info about where i got the badges**
-
-# Licensing
-
-**give some info about the license and give a link to where it can be reviewed fully**
 
 # Contact
 
