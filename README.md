@@ -1,6 +1,6 @@
 # Welcome to Fruitful Discussions! 🍓🥝🍍
 
-# Table of Contents
+# Table of Contents 📚
 
 - [About](#about)
 - [Testing and Test Coverage](#testing-and-test-coverage)
@@ -21,13 +21,13 @@
 
 - [The FruitFul-Discussions-BE](https://nc-news-project-t1h4.onrender.com/). However, this merely shows information in JSON format when a request is made to that endpoint. To see this data being used in the front end, take a look at [Fruitful-Discussions-FE (GitHub Repository)](https://github.com/loafdimension/fruitful-discussions-FE), and the [Hosted Fruitful-Discussions-FE]().
 
-# Testing and Test Coverage
+# Testing and Test Coverage ✅
 
 **Where can I find the tests and how do I run them?**
 
-- The tests are located in the **tests** folder and were separated in to testing the utility functions, the seeding, and the app which handled any requests to the API.
+- The tests are located in the [tests](./__tests__/) folder and were separated in to testing the utility functions, the seeding, and the app which handled any requests to the API.
 - The principle of Test Driven Development (TDD) was followed throughout and the Jest framework was used, along with the Supertest library.
-- To run all of the tests, you can run the command "npm run test", or "npm t" for short, followed by the file you wish to see. For example, "npm t app", "npm t seed", "npm t utils". Please see the scripts in the package JSON to see more options.
+- To run all of the tests, you can run the command `npm run test`, or `npm t` for short, followed by the file you wish to see. For example, `npm t app`, `npm t seed`, `npm t utils`. Please see the scripts in the package JSON to see more options.
 - To filter by test within each file, add .only or .skip to whichever tests you wish to filter.
 
 |                File                 | Tests |
@@ -43,8 +43,8 @@
 
 Verify that you have compatible versions of Node.js and PostgreSQL installed. The project was developed with the following versions:
 
-Node.js: v22.14.0
-PostgreSQL: 17.4
+- Node.js: v22.14.0
+- PostgreSQL: 17.4
 
 **2 - Fork and clone the repository**
 
@@ -69,7 +69,7 @@ Set up and seed your local PostgreSQL databases by running the following command
 1 - `npm run setup-dbs`
 2 - Either `npm run seed-dev` (for development data), or `npm run seed-prod` (for production data)
 
-# Documentation 📚
+# Documentation 🕮
 
 **API Endpoints**
 Below is a comprehensive list of all available API endpoints and their primary functionalities. For detailed request parameters, query options, and full example responses, please refer to the following link:

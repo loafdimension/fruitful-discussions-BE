@@ -2,7 +2,7 @@ const {
   convertTimestampToDate,
   createLookupObject,
   createRef,
-  formatComments
+  formatComments,
 } = require("../db/seeds/utils");
 
 describe("convertTimestampToDate", () => {
@@ -40,8 +40,9 @@ describe("convertTimestampToDate", () => {
     expect(result).toEqual(expected);
   });
 });
+
 describe("createRef", () => {
-  test('should return an empty object when passed an empty array', () => {
+  test("should return an empty object when passed an empty array", () => {
     //arrange
     const input = [];
     //act
@@ -50,29 +51,24 @@ describe("createRef", () => {
     expect(result).toEqual({});
   });
 
-  /* 
-  this test is failing and I am not sure why but I have checked on PSQL and everything seems 
-  to be as it should 
-  
-  the seed file and utils file were taken from emilys solution folder
-  */
-
-  test.skip('should return a lookup object with a single key and value when passed an array of length 1', () => {
+  test("should return a lookup object with a single key and value when passed an array of length 1", () => {
     //arrange
-    const input = ([{
-      article_id: 1,
-      title: 'Living in the shadow of a great man',
-      topic: 'mitch',
-      author: 'butter_bridge',
-      body: 'I find this existence challenging',
-      created_at: "2020-07-09T19:11:00.000Z",
-      votes: 100,
-      article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700'
-    }])
+    const input = [
+      {
+        article_id: 1,
+        title: "Living in the shadow of a great man",
+        topic: "mitch",
+        author: "butter_bridge",
+        body: "I find this existence challenging",
+        created_at: "2020-07-09T19:11:00.000Z",
+        votes: 100,
+        article_img_url:
+          "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+      },
+    ];
     //act
-    const result = createRef(input);
+    const result = createRef(input, "title", "article_id");
     //assert
-    expect(result).toEqual({'Living in the shadow of a great man': 1})
+    expect(result).toEqual({ "Living in the shadow of a great man": 1 });
   });
-})
-
+});
