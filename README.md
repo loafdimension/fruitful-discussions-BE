@@ -19,7 +19,7 @@
 
 **How do I get access to the hosted version?**
 
-- Here is a link! https://nc-news-project-t1h4.onrender.com/
+- [The FruitFul-Discussions-BE](https://nc-news-project-t1h4.onrender.com/). However, this merely shows information in JSON format when a request is made to that endpoint. To see this data being used in the front end, take a look at [Fruitful-Discussions-FE (GitHub Repository)](https://github.com/loafdimension/fruitful-discussions-FE), and the [Hosted Fruitful-Discussions-FE]() is available [here]().
 
 # Testing and Test Coverage
 
@@ -30,12 +30,12 @@
 - To run all of the tests, you can run the command "npm run test", or "npm t" for short, followed by the file you wish to see. For example, "npm t app", "npm t seed", "npm t utils". Please see the scripts in the package JSON to see more options.
 - To filter by test within each file, add .only or .skip to whichever tests you wish to filter.
 
-| File  | Link | Tests |
-| :---: | :--: | :---: |
-|  App  |      |  39   |
-| Seed  |      |  40   |
-| Utils |      |   7   |
-| Total |      |  86   |
+|                File                 | Tests |
+| :---------------------------------: | :---: |
+|   [App](./__tests__//app.test.js)   |  39   |
+|  [Seed](./__tests__//seed.test.js)  |  40   |
+| [Utils](./__tests__//utils.test.js) |   7   |
+|                Total                |  86   |
 
 # How to Install and Run
 
@@ -68,9 +68,24 @@
 
 # Documentation
 
-**As a user**
+**API Endpoints**
+Below is a comprehensive list of all available API endpoints and their primary functionalities. For detailed request parameters, query options, and full example responses, please refer to the following link:
 
-- [See information on available endpoints](./endpoints.json)
+- [More detailed information on available endpoints](./endpoints.json)
+
+| Method   | Endpoint                             | Description                                                           |
+| :------- | :----------------------------------- | :-------------------------------------------------------------------- |
+| `GET`    | `/api`                               | Serves a JSON representation of all available API endpoints.          |
+| `GET`    | `/api/topics`                        | Serves an array of all topics.                                        |
+| `GET`    | `/api/articles`                      | Serves an array of all articles, with optional sorting and filtering. |
+| `GET`    | `/api/articles/:article_id`          | Serves an object of a single article, as requested by its ID.         |
+| `GET`    | `/api/articles/:article_id/comments` | Serves an array of comments for a given article ID.                   |
+| `POST`   | `/api/articles/:article_id/comments` | Posts a new comment to a specified article.                           |
+| `PATCH`  | `/api/articles/:article_id`          | Updates the votes on an article by its article_id.                    |
+| `DELETE` | `/api/comments/:comment_id`          | Deletes a comment by its comment_id.                                  |
+| `GET`    | `/api/users`                         | Serves an array of all users.                                         |
+
+---
 
 # Feedback and Discussions
 
