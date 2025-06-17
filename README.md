@@ -126,6 +126,7 @@ Below is a comprehensive list of all available API endpoints and their primary f
 **Who worked on this project and how was it created?**
 
 - I created and worked on this project alone, but using Northcoders resources and with support from all of their wonderful staff.
+- This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by [Northcoders](https://northcoders.com/)
 
 ---
 
