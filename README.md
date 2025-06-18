@@ -6,6 +6,7 @@
 - [Testing and Test Coverage](#testing-and-test-coverage)
 - [How to Install and Run](#how-to-install-and-run)
 - [Documentation](#documentation)
+- [Tech Stack](#tech-stack)
 - [Feedback and Contributions](#feedback-and-contributions)
 - [Credits](#credits)
 - [Contact](#contact)
@@ -104,6 +105,20 @@ Below is a comprehensive list of all available API endpoints and their primary f
 | `DELETE` | `/api/comments/:comment_id`          | Deletes a comment by its comment_id.                                  |
 | `GET`    | `/api/users`                         | Serves an array of all users.                                         |
 
+---
+
+<a id="tech-stack"></a>
+
+# Tech Stack 💻
+
+- **Runtime Environment**: Node.js
+- **Web Framework**: Express.js
+- **Database**: PostgreSQL
+- **Database Driver**: PG (node-postgres)
+- **Testing Framework**: Jest
+- **HTTP Assertion Library**: Supertest
+- **Database Seeding/Migration**: PSQL
+- **Environment Variables**: Dotenv
 ---
 
 <a id="feedback-and-contributions"></a>
